@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>TESLA ROADSTER: ROCKET HILL</title>
+  <title>TESLA ROADSTER: ROCKET HILL — 2D EXTREME</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #050814;
+      background-color: #040714;
       font-family: 'Inter', sans-serif;
       touch-action: none;
     }
@@ -49,11 +49,21 @@
     }
     /* Custom Glassmorphism & Futuristic Glows */
     .cyber-panel {
-      background: rgba(10, 15, 32, 0.86);
+      background: rgba(10, 15, 32, 0.90);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .cyber-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.15s ease-out;
+    }
+    .cyber-card:hover {
+      border-color: rgba(56, 189, 248, 0.6);
+      transform: translateY(-2px);
     }
     .btn-red {
       background: linear-gradient(135deg, #ff1e42 0%, #c80024 100%);
@@ -65,9 +75,8 @@
       filter: brightness(1.1);
       box-shadow: 0 0 32px rgba(255, 30, 66, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.5);
     }
-    .btn-red:active, .btn-red.active-press {
-      transform: scale(0.95);
-    }
+    .btn-red:active { transform: scale(0.96); }
+
     .btn-cyan {
       background: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
       box-shadow: 0 0 24px rgba(0, 195, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
@@ -78,9 +87,20 @@
       filter: brightness(1.1);
       box-shadow: 0 0 32px rgba(0, 195, 255, 0.75);
     }
-    .btn-cyan:active, .btn-cyan.active-press {
-      transform: scale(0.95);
+    .btn-cyan:active { transform: scale(0.96); }
+
+    .btn-amber {
+      background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(252, 211, 77, 0.6);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
     }
+    .btn-amber:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 32px rgba(245, 158, 11, 0.75);
+    }
+    .btn-amber:active { transform: scale(0.96); }
+
     .btn-slate {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       border: 1px solid rgba(148, 163, 184, 0.3);
@@ -89,38 +109,30 @@
     }
     .btn-slate:hover {
       border-color: rgba(255, 255, 255, 0.5);
+      filter: brightness(1.1);
     }
-    .btn-slate:active, .btn-slate.active-press {
-      transform: scale(0.95);
-      background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
-    }
+    .btn-slate:active { transform: scale(0.96); }
+
     .pedal-btn {
-      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
     .pedal-btn.pressed {
       transform: scale(0.92) translateY(3px);
-      filter: brightness(1.25);
+      filter: brightness(1.3);
     }
+
     @keyframes pulseWarning {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.04); opacity: 0.82; }
+      50% { transform: scale(1.04); opacity: 0.85; }
     }
     .warning-pulse {
       animation: pulseWarning 0.55s infinite ease-in-out;
     }
-    /* Custom scrollbar for garage modal */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
-      border-radius: 8px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(239, 68, 68, 0.6);
-      border-radius: 8px;
-    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 210, 255, 0.5); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 210, 255, 0.8); }
   </style>
 </head>
 <body class="text-white antialiased select-none">
@@ -129,7 +141,7 @@
   <canvas id="gameCanvas"></canvas>
 
   <!-- =========================================================
-       GAMEPLAY HUD & MOBILE CONTROLS
+       1. GAMEPLAY HUD & CONTROLS SCREEN
        ========================================================= -->
   <div id="hudScreen" class="ui-layer hidden flex-col justify-between p-2 sm:p-4">
     <!-- Top HUD Bar -->
@@ -183,7 +195,7 @@
             <svg class="w-4 h-4 text-orange-400 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
             </svg>
-            <span>ROCKET PLASMA</span>
+            <span id="hudFuelTitle">ROCKET PLASMA</span>
           </div>
           <span id="hudRocketStatus" class="text-[10px] font-orbitron font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
             READY
@@ -244,7 +256,7 @@
           <span class="text-[10px] text-slate-400 hidden sm:inline">[A / LEFT]</span>
         </button>
 
-        <!-- Air Pitch Buttons (Helpful on Mobile, subtle) -->
+        <!-- Air Pitch Buttons -->
         <div class="flex flex-col gap-1.5">
           <button id="btnTiltBack" class="pedal-btn btn-slate rounded-xl px-2.5 py-2 flex items-center gap-1 text-[10px] font-orbitron text-slate-300" title="Tilt Nose Up (W / Up)">
             <span>NOSE UP</span>
@@ -257,7 +269,7 @@
 
       <!-- Center/Right Prominent: ROCKET FLIP + ACCELERATE -->
       <div class="flex items-end gap-2.5 sm:gap-4">
-        <!-- Signature ROCKET FLIP Button -->
+        <!-- ROCKET FLIP Button -->
         <button id="btnRocket" class="pedal-btn btn-cyan rounded-2xl w-28 h-24 sm:w-40 sm:h-28 flex flex-col items-center justify-center gap-1 select-none relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-t from-orange-500/25 via-transparent to-white/10 pointer-events-none"></div>
           <div class="flex items-center gap-1">
@@ -282,11 +294,11 @@
   </div>
 
   <!-- =========================================================
-       START MENU SCREEN
+       2. START MENU SCREEN
        ========================================================= -->
   <div id="startScreen" class="ui-layer flex items-center justify-center p-4">
     <div class="cyber-panel interactive rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-red-500/30 relative overflow-hidden">
-      <!-- Ambient Top Glow -->
+      <!-- Ambient Glows -->
       <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-48 bg-red-600/25 blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 right-10 w-80 h-48 bg-cyan-500/20 blur-3xl pointer-events-none"></div>
 
@@ -303,68 +315,13 @@
         </div>
       </div>
 
-      <!-- Custom Vector Illustration of the Futuristic Red Tesla Roadster with Thrusters -->
-      <div class="my-5 bg-slate-950/70 rounded-2xl p-4 border border-slate-800/90 relative overflow-hidden flex flex-col items-center">
-        <svg class="w-full max-w-md h-32 sm:h-36 overflow-visible" viewBox="0 0 420 140">
-          <defs>
-            <linearGradient id="roadsterBodyGrad" x1="0%" y1="0%" x2="100%" y2="20%">
-              <stop offset="0%" stop-color="#99001b"/>
-              <stop offset="35%" stop-color="#ff173c"/>
-              <stop offset="75%" stop-color="#ff3b5c"/>
-              <stop offset="100%" stop-color="#b3001b"/>
-            </linearGradient>
-            <linearGradient id="canopyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#1e293b"/>
-              <stop offset="100%" stop-color="#020617"/>
-            </linearGradient>
-            <linearGradient id="flameGrad" x1="100%" y1="50%" x2="0%" y2="50%">
-              <stop offset="0%" stop-color="#ffffff"/>
-              <stop offset="30%" stop-color="#00e1ff"/>
-              <stop offset="70%" stop-color="#ff6a00"/>
-              <stop offset="100%" stop-color="#ff0000" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <!-- Ground Neon Horizon Line -->
-          <line x1="10" y1="116" x2="410" y2="116" stroke="#00d2ff" stroke-width="2" stroke-opacity="0.45"/>
-          <!-- Rocket Exhaust Flame Preview -->
-          <polygon points="95,82 10,66 32,82 5,95 95,94" fill="url(#flameGrad)" />
-          <polygon points="95,84 40,76 52,86 35,91 95,91" fill="#ffffff" opacity="0.9"/>
-          <!-- Panoramic Glass Canopy -->
-          <path d="M 145 64 Q 205 32 285 60 L 245 68 L 145 68 Z" fill="url(#canopyGrad)" stroke="#64748b" stroke-width="1.5"/>
-          <!-- Sleek Roadster Aerodynamic Body -->
-          <path d="M 82 68 L 112 58 L 155 62 L 275 58 L 355 72 Q 375 78 378 92 L 365 98 L 88 98 L 76 84 Z" fill="url(#roadsterBodyGrad)" stroke="#ff8fa3" stroke-width="1"/>
-          <!-- Specular Metallic Highlight -->
-          <path d="M 100 72 Q 230 64 358 79" fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity="0.55"/>
-          <!-- Side Air Intake Scoop -->
-          <polygon points="215,74 265,71 252,89 200,89" fill="#090d16" stroke="#ff4d6d" stroke-width="1"/>
-          <!-- Deployed Side Rocket Thruster Pod -->
-          <g transform="translate(95, 76)">
-            <rect x="0" y="0" width="34" height="16" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
-            <polygon points="0,2 -8,-2 -8,18 0,14" fill="#475569"/>
-            <circle cx="17" cy="8" r="4" fill="#00e1ff"/>
-          </g>
-          <!-- Headlight & Light Cone -->
-          <polygon points="366,79 418,65 418,98 366,86" fill="#00e1ff" opacity="0.22"/>
-          <polygon points="354,76 373,80 368,85 350,82" fill="#e0f2fe"/>
-          <!-- Rear Plasma Tail Light -->
-          <rect x="76" y="69" width="8" height="11" rx="2" fill="#ff002b"/>
-          <!-- Rear Wheel -->
-          <g transform="translate(135, 96)">
-            <circle r="21" fill="#0f172a" stroke="#334155" stroke-width="4"/>
-            <circle r="14" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
-            <circle r="5" fill="#ef4444"/>
-            <line x1="-13" y1="0" x2="13" y2="0" stroke="#cbd5e1" stroke-width="2"/>
-            <line x1="0" y1="-13" x2="0" y2="13" stroke="#cbd5e1" stroke-width="2"/>
-          </g>
-          <!-- Front Wheel -->
-          <g transform="translate(318, 96)">
-            <circle r="21" fill="#0f172a" stroke="#334155" stroke-width="4"/>
-            <circle r="14" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
-            <circle r="5" fill="#ef4444"/>
-            <line x1="-13" y1="0" x2="13" y2="0" stroke="#cbd5e1" stroke-width="2"/>
-            <line x1="0" y1="-13" x2="0" y2="13" stroke="#cbd5e1" stroke-width="2"/>
-          </g>
-        </svg>
+      <!-- Live Interactive Active Car Preview Box -->
+      <div class="my-5 bg-slate-950/80 rounded-2xl p-4 border border-slate-800 relative overflow-hidden flex flex-col items-center">
+        <canvas id="menuCarCanvas" width="440" height="130" class="w-full max-w-md h-auto block"></canvas>
+        <div class="w-full flex items-center justify-between text-xs px-2 pt-2 border-t border-slate-800/80 mt-1 font-orbitron">
+          <div class="text-slate-400 text-[11px]">ACTIVE: <span id="menuActiveCarName" class="text-cyan-300 font-bold">SILVER SPORT</span></div>
+          <button id="btnQuickGarage" class="text-xs text-amber-300 hover:text-white font-bold underline">CHANGE CAR →</button>
+        </div>
 
         <!-- Stats Summary Bar -->
         <div class="w-full grid grid-cols-3 gap-2 pt-3 mt-2 border-t border-slate-800/80 text-center">
@@ -401,7 +358,7 @@
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
           </svg>
-          <span>LAUNCH ROADSTER</span>
+          <span>LAUNCH VEHICLE</span>
         </button>
 
         <button id="btnOpenGarage" class="sm:col-span-2 btn-cyan rounded-xl py-3 font-orbitron font-bold text-sm tracking-wider text-white flex items-center justify-center gap-2">
@@ -409,7 +366,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
           </svg>
-          <span>GARAGE &amp; UPGRADES</span>
+          <span>CAR SELECT &amp; GARAGE</span>
         </button>
 
         <button id="btnOpenSettings" class="btn-slate rounded-xl py-3 font-orbitron font-bold text-sm tracking-wider text-slate-200 flex items-center justify-center gap-2">
@@ -423,50 +380,142 @@
   </div>
 
   <!-- =========================================================
-       GARAGE / UPGRADE SHOP SCREEN
+       3. GARAGE & CAR SELECTION SCREEN
        ========================================================= -->
-  <div id="garageScreen" class="ui-layer hidden items-center justify-center p-3 sm:p-6">
-    <div class="cyber-panel interactive rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col p-5 sm:p-7 border border-cyan-500/30">
+  <div id="garageScreen" class="ui-layer hidden items-center justify-center p-3 sm:p-6 overflow-hidden">
+    <div class="cyber-panel interactive rounded-3xl max-w-5xl w-full max-h-[94vh] flex flex-col p-4 sm:p-6 border border-cyan-500/30 overflow-hidden">
       <!-- Top Header -->
-      <div class="flex items-center justify-between gap-4 pb-4 border-b border-slate-800">
-        <div>
-          <h2 class="font-orbitron font-black text-xl sm:text-2xl text-white tracking-wide">
-            TESLA R&amp;D GARAGE
-          </h2>
-          <p class="text-xs text-slate-400">Upgrade drivetrain, suspension, and SpaceX cold-gas rocket thrusters</p>
-        </div>
+      <div class="flex items-center justify-between gap-4 pb-3 border-b border-slate-800">
         <div class="flex items-center gap-3">
-          <div class="px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-400/40 font-orbitron font-bold text-amber-300 text-sm sm:text-base">
-            $<span id="garageCoins">0</span>
-          </div>
           <button id="btnCloseGarage" class="btn-slate px-4 py-2 rounded-xl font-orbitron font-bold text-xs sm:text-sm text-white">
-            BACK
+            ← MENU
           </button>
+          <div>
+            <h2 class="font-orbitron font-black text-lg sm:text-2xl text-white tracking-wide">
+              CYBER GARAGE &amp; CAR SELECT
+            </h2>
+            <p class="text-xs text-slate-400">Choose between 5 distinct vehicles and tune performance</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-400/40 font-orbitron font-bold text-amber-300 text-sm sm:text-base flex items-center gap-1.5">
+            <span>$</span><span id="garageCoins">0</span>
+          </div>
         </div>
       </div>
 
-      <!-- Upgrades Grid -->
-      <div id="upgradesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 my-4 overflow-y-auto pr-1">
-        <!-- Dynamically populated by UIManager -->
+      <!-- Garage Navigation Tabs (Showroom vs Upgrades) -->
+      <div class="flex items-center gap-2 pt-3">
+        <button id="tabShowroom" class="px-4 py-1.5 rounded-lg font-orbitron font-bold text-xs bg-cyan-500/20 text-cyan-400 border border-cyan-500/40">
+          VEHICLE SHOWROOM
+        </button>
+        <button id="tabUpgrades" class="px-4 py-1.5 rounded-lg font-orbitron font-bold text-xs text-slate-400 hover:text-white">
+          PERFORMANCE UPGRADES
+        </button>
+      </div>
+
+      <!-- TAB 1: VEHICLE SHOWROOM (Car Carousel, Preview, Stats & Select/Buy) -->
+      <div id="showroomView" class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 my-2 overflow-y-auto pr-1">
+        <!-- Left: Live Preview Canvas & Stats (7 Cols) -->
+        <div class="lg:col-span-7 flex flex-col gap-3">
+          <!-- 2D Canvas Live Preview -->
+          <div class="cyber-panel rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden border border-slate-700 min-h-[200px]">
+            <canvas id="garagePreviewCanvas" width="460" height="150" class="w-full max-w-md h-auto block"></canvas>
+            <div class="w-full flex items-center justify-between text-xs px-2 pt-2 border-t border-slate-800 mt-2 font-orbitron">
+              <div id="previewCarBadge" class="text-xs font-bold text-cyan-400">FUTURISTIC ROADSTER</div>
+              <div id="previewCarStatus" class="font-bold text-emerald-400 text-xs">OWNED / ACTIVE</div>
+            </div>
+          </div>
+
+          <!-- Car Title & Description -->
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+            <h3 id="previewCarName" class="font-orbitron font-black text-lg text-white">SILVER SPORT</h3>
+            <p id="previewCarDesc" class="text-xs text-slate-400 mt-0.5">Sleek aerodynamic silver sports coupe with dual electric motors.</p>
+          </div>
+
+          <!-- Performance Stats Bars -->
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2 text-xs font-orbitron">
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <span class="text-slate-400">MAX SPEED</span>
+                <span id="statSpeed" class="text-cyan-400 font-bold">75/100</span>
+              </div>
+              <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div id="barSpeed" class="h-full bg-cyan-400 rounded-full" style="width: 75%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <span class="text-slate-400">ACCELERATION</span>
+                <span id="statAccel" class="text-red-400 font-bold">70/100</span>
+              </div>
+              <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div id="barAccel" class="h-full bg-red-400 rounded-full" style="width: 70%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <span class="text-slate-400">TRACTION &amp; GRIP</span>
+                <span id="statTraction" class="text-emerald-400 font-bold">70/100</span>
+              </div>
+              <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div id="barTraction" class="h-full bg-emerald-400 rounded-full" style="width: 70%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <span class="text-slate-400">SUSPENSION TRAVEL</span>
+                <span id="statSusp" class="text-yellow-400 font-bold">65/100</span>
+              </div>
+              <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div id="barSusp" class="h-full bg-yellow-400 rounded-full" style="width: 65%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Select / Purchase Action Button -->
+          <button id="btnSelectOrBuy" class="w-full btn-cyan py-3.5 rounded-xl font-orbitron font-black text-sm tracking-wider text-white">
+            SELECT VEHICLE
+          </button>
+        </div>
+
+        <!-- Right: 5 Car Selection Cards (5 Cols) -->
+        <div class="lg:col-span-5 flex flex-col gap-2.5">
+          <div class="text-xs font-orbitron font-bold text-slate-300">SELECT VEHICLE MODEL</div>
+          <div id="carCardsContainer" class="flex flex-col gap-2">
+            <!-- Populated dynamically by UIManager -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: PERFORMANCE UPGRADES VIEW -->
+      <div id="upgradesView" class="hidden flex-1 flex-col justify-between my-2 overflow-y-auto pr-1">
+        <div id="upgradesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- Populated dynamically by UIManager -->
+        </div>
       </div>
 
       <!-- Bottom Launch Button -->
-      <div class="pt-3 border-t border-slate-800 flex justify-end gap-3">
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-3">
+        <div class="text-xs text-slate-400 font-orbitron hidden sm:block">
+          ACTIVE VEHICLE: <span id="garageActiveCarFooter" class="text-white font-bold">SILVER SPORT</span>
+        </div>
         <button id="btnGaragePlay" class="btn-red px-8 py-3 rounded-xl font-orbitron font-black text-sm sm:text-base tracking-wider text-white">
-          TEST DRIVE NOW
+          TEST DRIVE NOW →
         </button>
       </div>
     </div>
   </div>
 
   <!-- =========================================================
-       PAUSE & SETTINGS MODAL
+       4. PAUSE & SETTINGS MODAL
        ========================================================= -->
   <div id="pauseScreen" class="ui-layer hidden items-center justify-center p-4">
     <div class="cyber-panel interactive rounded-3xl max-w-md w-full p-6 sm:p-7 border border-slate-700">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800">
         <h2 id="pauseModalTitle" class="font-orbitron font-black text-2xl text-white">MISSION PAUSED</h2>
-        <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 font-orbitron text-xs">SYS v2.4</span>
+        <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 font-orbitron text-xs">SYS v2.5</span>
       </div>
 
       <!-- Settings Toggles -->
@@ -512,7 +561,7 @@
         </div>
       </div>
 
-      <!-- Pause Action Buttons -->
+      <!-- Action Buttons -->
       <div id="pauseGameActions" class="flex flex-col gap-2.5">
         <button id="btnResume" class="btn-cyan py-3 rounded-xl font-orbitron font-bold text-sm tracking-wider text-white">
           RESUME DRIVE
@@ -520,7 +569,10 @@
         <button id="btnRestartPause" class="btn-red py-3 rounded-xl font-orbitron font-bold text-sm tracking-wider text-white">
           RESTART RUN
         </button>
-        <button id="btnPauseToMenu" class="btn-slate py-3 rounded-xl font-orbitron font-bold text-sm tracking-wider text-slate-300">
+        <button id="btnPauseGarage" class="btn-slate py-2.5 rounded-xl font-orbitron font-bold text-sm text-cyan-300">
+          CHANGE CAR / UPGRADE
+        </button>
+        <button id="btnPauseToMenu" class="btn-slate py-2.5 rounded-xl font-orbitron font-bold text-sm text-slate-300">
           MAIN MENU
         </button>
       </div>
@@ -534,7 +586,7 @@
   </div>
 
   <!-- =========================================================
-       GAME OVER SCREEN
+       5. GAME OVER SCREEN
        ========================================================= -->
   <div id="gameOverScreen" class="ui-layer hidden items-center justify-center p-4">
     <div class="cyber-panel interactive rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-red-500/40 text-center relative overflow-hidden">
@@ -586,7 +638,7 @@
         </div>
       </div>
 
-      <!-- Buttons -->
+      <!-- Action Buttons -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <button id="btnRetry" class="sm:col-span-2 btn-red py-4 rounded-2xl font-orbitron font-black text-lg tracking-wider text-white flex items-center justify-center gap-2">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -595,7 +647,7 @@
           <span>RETRY LAUNCH</span>
         </button>
         <button id="btnGameOverGarage" class="btn-cyan py-3 rounded-xl font-orbitron font-bold text-sm tracking-wider text-white">
-          UPGRADE CAR
+          CHANGE CAR / UPGRADE
         </button>
         <button id="btnGameOverMenu" class="btn-slate py-3 rounded-xl font-orbitron font-bold text-sm tracking-wider text-slate-200">
           MAIN MENU
@@ -605,7 +657,7 @@
   </div>
 
   <!-- =========================================================
-       MODULAR GAME ENGINE SCRIPT
+       JAVASCRIPT GAME ENGINE SCRIPT START
        ========================================================= -->
   <script>
     "use strict";
@@ -620,6 +672,8 @@
           coins: 250,
           bestDistance: 0,
           totalFlips: 0,
+          selectedCar: "silver_sport",
+          ownedCars: ["silver_sport"],
           settings: {
             sfx: true,
             music: true,
@@ -643,13 +697,20 @@
           const raw = localStorage.getItem(this.storageKey);
           if (!raw) return JSON.parse(JSON.stringify(this.defaultData));
           const parsed = JSON.parse(raw);
-          return {
+          const loaded = {
             coins: typeof parsed.coins === "number" ? parsed.coins : this.defaultData.coins,
             bestDistance: typeof parsed.bestDistance === "number" ? parsed.bestDistance : 0,
             totalFlips: typeof parsed.totalFlips === "number" ? parsed.totalFlips : 0,
+            selectedCar: typeof parsed.selectedCar === "string" ? parsed.selectedCar : "silver_sport",
+            ownedCars: Array.isArray(parsed.ownedCars) ? parsed.ownedCars : ["silver_sport"],
             settings: { ...this.defaultData.settings, ...(parsed.settings || {}) },
             upgrades: { ...this.defaultData.upgrades, ...(parsed.upgrades || {}) }
           };
+
+          if (!loaded.ownedCars.includes("silver_sport")) {
+            loaded.ownedCars.push("silver_sport");
+          }
+          return loaded;
         } catch (e) {
           return JSON.parse(JSON.stringify(this.defaultData));
         }
@@ -712,6 +773,7 @@
 
       getUpgradeCost(key) {
         const cfg = this.getUpgradeConfig().find(u => u.key === key);
+        if (!cfg) return 100;
         const lvl = this.data.upgrades[key] || 1;
         return Math.round(cfg.baseCost * Math.pow(1.45, lvl - 1));
       }
@@ -751,6 +813,11 @@
         }
       }
 
+      ensureContext() {
+        if (!this.initialized) this.init();
+        if (this.ctx && this.ctx.state === "suspended") this.ctx.resume();
+      }
+
       setupEngineHum() {
         if (!this.ctx) return;
         this.engineOsc = this.ctx.createOscillator();
@@ -781,7 +848,6 @@
         if (!this.initialized || !this.saveManager.data.settings.sfx) return;
         const now = this.ctx.currentTime;
 
-        // White noise buffer for rocket roar
         const bufferSize = this.ctx.sampleRate * 0.65;
         const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
         const data = buffer.getChannelData(0);
@@ -808,7 +874,6 @@
         gain.connect(this.ctx.destination);
         noise.start(now);
 
-        // Futuristic plasma sweep oscillator
         const osc = this.ctx.createOscillator();
         const oscGain = this.ctx.createGain();
         osc.type = "sawtooth";
@@ -1009,7 +1074,7 @@
 
       setupKeyboard() {
         window.addEventListener("keydown", (e) => {
-          this.game.audio.init();
+          this.game.audio.ensureContext();
           if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space", " "].includes(e.key) || e.code === "Space") {
             if (this.game.state === "PLAYING") e.preventDefault();
           }
@@ -1052,7 +1117,7 @@
         const startHold = (e) => {
           e.preventDefault();
           e.stopPropagation();
-          this.game.audio.init();
+          this.game.audio.ensureContext();
           this.keys[keyName] = true;
           btn.classList.add("pressed");
           if (onTriggerOnce) onTriggerOnce();
@@ -1100,17 +1165,124 @@
     }
 
     /* =========================================================
-       4. PROCEDURAL TERRAIN GENERATOR (Hills, Slopes, Gaps)
+       4. VEHICLE CONFIGURATIONS (5 Distinct 2D Vehicles)
+       ========================================================= */
+    const VEHICLE_CONFIGS = {
+      silver_sport: {
+        id: "silver_sport",
+        name: "Silver Sport",
+        badge: "FUTURISTIC ROADSTER",
+        price: 0, // Starter
+        desc: "Sleek aerodynamic silver sports coupe with dual electric motors and SpaceX cold-gas rocket thrusters.",
+        stats: { speed: 75, accel: 70, traction: 70, suspension: 65, airControl: 70 },
+        specs: {
+          wheelBase: 76,
+          wheelRadius: 17,
+          chassisHeight: 24,
+          rideHeight: 30,
+          enginePower: 540,
+          maxSpeed: 620,
+          traction: 1.0,
+          suspensionStiffness: 22.0,
+          airControlTorque: 5.2,
+          hasRocket: true
+        }
+      },
+      red_racer: {
+        id: "red_racer",
+        name: "Red Racer",
+        badge: "GT TRACK SPECIAL",
+        price: 450,
+        desc: "Aggressive crimson race car with twin racing stripes, carbon front splitter, and high-downforce GT wing.",
+        stats: { speed: 88, accel: 85, traction: 78, suspension: 60, airControl: 65 },
+        specs: {
+          wheelBase: 78,
+          wheelRadius: 17,
+          chassisHeight: 25,
+          rideHeight: 30,
+          enginePower: 620,
+          maxSpeed: 710,
+          traction: 1.12,
+          suspensionStiffness: 24.0,
+          airControlTorque: 5.6,
+          hasRocket: false
+        }
+      },
+      neon_gt: {
+        id: "neon_gt",
+        name: "Neon GT",
+        badge: "CYBER HYPERCAR",
+        price: 1200,
+        desc: "Modern stealth dark hypercar with glowing cyan contour detailing, carbon aerodisc wheels, and high agility.",
+        stats: { speed: 92, accel: 90, traction: 82, suspension: 70, airControl: 85 },
+        specs: {
+          wheelBase: 80,
+          wheelRadius: 18,
+          chassisHeight: 22,
+          rideHeight: 28,
+          enginePower: 660,
+          maxSpeed: 760,
+          traction: 1.18,
+          suspensionStiffness: 23.5,
+          airControlTorque: 6.2,
+          hasRocket: true
+        }
+      },
+      offroad_beast: {
+        id: "offroad_beast",
+        name: "Offroad Beast",
+        badge: "4x4 CRAWLER",
+        price: 2500,
+        desc: "Rugged lifted dune buggy with tubular steel roll cage, exposed coil springs, and giant mud tires.",
+        stats: { speed: 65, accel: 88, traction: 95, suspension: 95, airControl: 60 },
+        specs: {
+          wheelBase: 84,
+          wheelRadius: 22,
+          chassisHeight: 32,
+          rideHeight: 38,
+          enginePower: 640,
+          maxSpeed: 560,
+          traction: 1.35,
+          suspensionStiffness: 28.0,
+          airControlTorque: 4.8,
+          hasRocket: false
+        }
+      },
+      golden_phantom: {
+        id: "golden_phantom",
+        name: "Golden Phantom",
+        badge: "PREMIUM ELITE",
+        price: 5000,
+        desc: "Exclusive metallic gold and forged carbon hypercar with twin SpaceX thrusters and maximum velocity.",
+        stats: { speed: 100, accel: 98, traction: 88, suspension: 75, airControl: 90 },
+        specs: {
+          wheelBase: 82,
+          wheelRadius: 18,
+          chassisHeight: 21,
+          rideHeight: 28,
+          enginePower: 720,
+          maxSpeed: 840,
+          traction: 1.25,
+          suspensionStiffness: 25.0,
+          airControlTorque: 6.8,
+          hasRocket: true
+        }
+      }
+    };
+
+    /* =========================================================
+       5. PROCEDURAL TERRAIN GENERATOR (Hills, Slopes, Gaps)
        ========================================================= */
     class TerrainGenerator {
       constructor() {
         this.step = 36; // Horizontal vertex spacing in pixels
         this.points = [];
-        this.gaps = []; // Array of { startX, endX,cleared }
+        this.gaps = []; // Array of { startX, endX, cleared, type }
         this.steepSlopes = []; // Array of { startX, endX }
         this.lastX = -600;
         this.baseY = 420;
         this.seed = Math.random() * 1000;
+        this.nextFeatureX = 1150;
         this.reset();
       }
 
@@ -1130,11 +1302,9 @@
           const distMeters = Math.max(0, x / 22);
           const difficulty = Math.min(2.6, 0.35 + distMeters / 950);
 
-          // Check if we should create a special terrain feature (Chasm Gap or Steep Ramp)
           if (x > this.nextFeatureX && distMeters > 45) {
             const roll = Math.random();
             if (roll < 0.36) {
-              // Create a Chasm Gap between hills
               const gapWidth = 175 + Math.min(130, distMeters * 0.08 + Math.random() * 65);
               const gapStart = x + this.step * 2;
               const gapEnd = gapStart + gapWidth;
@@ -1146,7 +1316,6 @@
               });
               this.nextFeatureX = gapEnd + 750 + Math.random() * 550;
             } else if (roll < 0.68) {
-              // Create a Steep Hazard Slope section
               const slopeStart = x + this.step;
               const slopeEnd = slopeStart + 280;
               this.steepSlopes.push({
@@ -1163,14 +1332,12 @@
 
           let y = this.baseY;
           if (x > 260) {
-            // Smooth procedural hills combining multiple sine waves
             const blend = Math.min(1, (x - 260) / 500);
             const w1 = Math.sin((x + this.seed) * 0.0022) * (95 * difficulty);
             const w2 = Math.sin((x + this.seed * 1.7) * 0.0055) * (45 * difficulty);
             const w3 = Math.cos((x + this.seed * 0.5) * 0.011) * (18 * difficulty);
             y = this.baseY + (w1 + w2 + w3) * blend;
 
-            // If inside a steep slope zone, amplify upward incline
             for (let i = 0; i < this.steepSlopes.length; i++) {
               const s = this.steepSlopes[i];
               if (x >= s.startX && x <= s.endX) {
@@ -1179,7 +1346,6 @@
               }
             }
 
-            // Slight upward ramp right before a chasm gap for dramatic launch
             for (let i = 0; i < this.gaps.length; i++) {
               const g = this.gaps[i];
               if (x >= g.startX - 180 && x <= g.startX) {
@@ -1213,7 +1379,7 @@
 
       getHeightAt(x) {
         if (this.isGapAt(x)) {
-          return this.baseY + 950; // Deep chasm pit
+          return this.baseY + 950;
         }
         if (this.points.length === 0) return this.baseY;
         const firstX = this.points[0].x;
@@ -1224,7 +1390,6 @@
         const p0 = this.points[idx];
         const p1 = this.points[idx + 1];
         const t = (x - p0.x) / this.step;
-        // Cosine interpolation for ultra-smooth tire rolling
         const ct = (1 - Math.cos(t * Math.PI)) * 0.5;
         return p0.y * (1 - ct) + p1.y * ct;
       }
@@ -1240,26 +1405,22 @@
         const startX = camera.x - 120;
         const endX = camera.x + canvasWidth / camera.zoom + 180;
 
-        // Draw Chasm Gap Hazard Glows & Warning Beacons
         for (let i = 0; i < this.gaps.length; i++) {
           const g = this.gaps[i];
           if (g.endX < startX || g.startX > endX) continue;
           const leftY = this.getHeightAt(g.startX - 4);
           const rightY = this.getHeightAt(g.endX + 4);
 
-          // Red abyss glow inside chasm
           const pitGrad = ctx.createLinearGradient(0, Math.min(leftY, rightY), 0, Math.min(leftY, rightY) + 320);
           pitGrad.addColorStop(0, "rgba(255, 30, 66, 0.28)");
           pitGrad.addColorStop(1, "rgba(5, 8, 20, 0.98)");
           ctx.fillStyle = pitGrad;
           ctx.fillRect(g.startX, Math.min(leftY, rightY), g.endX - g.startX, 450);
 
-          // Warning beacons on both cliff edges
           this.drawCliffBeacon(ctx, g.startX - 6, leftY);
           this.drawCliffBeacon(ctx, g.endX + 6, rightY);
         }
 
-        // Draw Steep Slope Hazard Chevrons
         for (let i = 0; i < this.steepSlopes.length; i++) {
           const s = this.steepSlopes[i];
           if (s.endX < startX || s.startX > endX) continue;
@@ -1272,7 +1433,6 @@
           ctx.restore();
         }
 
-        // Draw Solid Terrain Chunks (broken across chasm gaps)
         let currentSegment = [];
         for (let i = 0; i < this.points.length; i++) {
           const pt = this.points[i];
@@ -1308,7 +1468,6 @@
       drawTerrainSegment(ctx, seg, camera, canvasHeight) {
         const bottomY = camera.y + canvasHeight / camera.zoom + 500;
 
-        // 1. Subsurface dark rock fill
         ctx.beginPath();
         ctx.moveTo(seg[0].x, bottomY);
         for (let i = 0; i < seg.length; i++) {
@@ -1324,7 +1483,6 @@
         ctx.fillStyle = terGrad;
         ctx.fill();
 
-        // 2. Futuristic geometric subsurface grid lines
         ctx.save();
         ctx.clip();
         ctx.strokeStyle = "rgba(56, 189, 248, 0.08)";
@@ -1338,7 +1496,6 @@
         }
         ctx.restore();
 
-        // 3. Top road crust layer
         ctx.beginPath();
         for (let i = 0; i < seg.length; i++) {
           if (i === 0) ctx.moveTo(seg[i].x, seg[i].y);
@@ -1350,7 +1507,6 @@
         ctx.lineJoin = "round";
         ctx.stroke();
 
-        // 4. Glowing Cyan/Red Cyber Road Top Surface Line
         ctx.beginPath();
         for (let i = 0; i < seg.length; i++) {
           if (i === 0) ctx.moveTo(seg[i].x, seg[i].y - 3);
@@ -1363,7 +1519,7 @@
     }
 
     /* =========================================================
-       5. ROCKET CONTROLLER (Rocket Boost Flight & Single 360° Flip)
+       6. ROCKET CONTROLLER (Rocket Boost Flight & Single 360° Flip)
        ========================================================= */
     class RocketController {
       constructor(game) {
@@ -1377,21 +1533,16 @@
         this.energy = this.maxEnergy;
         this.activationCost = 34;
 
-        // Rocket Flight & Single 360° Flip State Machine
         this.isBoosting = false;
         this.boostTimer = 0;
         this.boostDuration = 0.72;
 
-        // Flip tracking: enforces EXACTLY ONE complete 360° flip per activation
         this.flipActive = false;
         this.flipAccumulated = 0;
         this.flipCompletedThisActivation = false;
         this.stabilizingAfterFlip = false;
 
-        // Thruster mechanical deployment animation (0 = closed, 1 = open)
         this.thrusterOpenProgress = 0;
-
-        // Auto-assist cooldown so it doesn't spam
         this.autoAssistCooldown = 0;
       }
 
@@ -1415,19 +1566,16 @@
         this.isBoosting = true;
         this.boostTimer = this.boostDuration;
 
-        // Start the single 360-degree flip state
         this.flipActive = true;
         this.flipAccumulated = 0;
         this.flipCompletedThisActivation = false;
         this.stabilizingAfterFlip = false;
 
-        // Immediate launch lift & forward impulse so car clears obstacles smoothly
         car.vy = Math.min(car.vy, -120) - 340 * thrustMult;
         car.vx = Math.max(car.vx + 195 * thrustMult, 440 * thrustMult);
-        car.y -= 8; // Lift smoothly off ground contact
+        car.y -= 8;
         car.grounded = false;
 
-        // Audio & Camera feedback
         this.game.audio.playRocketIgnite();
         this.game.camera.addShake(7);
 
@@ -1438,7 +1586,6 @@
           this.game.addFloatingText(car.x, car.y - 60, "ROCKET BOOST!", "#ff6a00");
         }
 
-        // Check if launching near an obstacle for subtle slow-motion highlight
         if (this.game.saveManager.data.settings.slowMo && this.game.obstacles.hasHazardNear(car.x, 380)) {
           this.game.triggerSlowMo(0.55, 0.62);
         }
@@ -1455,25 +1602,19 @@
           this.autoAssistCooldown = Math.max(0, this.autoAssistCooldown - dt);
         }
 
-        // Recharge energy when not boosting
         if (!this.isBoosting) {
           const rechargeRate = 9.5 + (upg.energyCap - 1) * 1.6;
           this.energy = Math.min(this.maxEnergy, this.energy + rechargeRate * dt);
         }
 
-        // Animate side thruster pods opening/closing
         const targetOpen = (this.isBoosting || this.flipActive) ? 1 : 0;
         this.thrusterOpenProgress += (targetOpen - this.thrusterOpenProgress) * Math.min(1, dt * 14);
 
-        // Active Rocket Boost Flight Forces
         if (this.isBoosting) {
           this.boostTimer -= dt;
-
-          // Continuous upward lift & forward thrust during rocket burn
           car.vy -= 420 * thrustMult * dt;
           car.vx = Math.min(car.maxSpeed * 1.32, car.vx + 240 * thrustMult * dt);
 
-          // Spawn dense rocket exhaust flames, sparks, and smoke from both side/rear thrusters
           this.spawnThrusterParticles(car);
 
           if (this.boostTimer <= 0) {
@@ -1481,38 +1622,31 @@
           }
         }
 
-        // Single 360° Aerial Flip Rotation Controller
         if (this.flipActive && !this.flipCompletedThisActivation) {
-          // Target angular speed to complete exactly 1 full 360° backflip (~0.62 seconds)
-          const targetFlipRate = -Math.PI * 2 / 0.60; // Counter-clockwise backflip
+          const targetFlipRate = -Math.PI * 2 / 0.60;
           const stepAngle = targetFlipRate * dt;
 
           car.angle += stepAngle;
           car.angularVel = targetFlipRate;
           this.flipAccumulated += Math.abs(stepAngle);
 
-          // Emit extra stabilizer sparks while flipping
           if (Math.random() < 0.65) {
             this.spawnThrusterParticles(car);
           }
 
-          // Check if the single 360-degree rotation is complete
           if (this.flipAccumulated >= Math.PI * 2) {
             this.flipCompletedThisActivation = true;
             this.flipActive = false;
             this.stabilizingAfterFlip = true;
             car.angularVel = 0;
 
-            // Normalize car angle cleanly
             const terrainSlope = this.game.terrain.getSlopeAt(car.x);
             car.angle = terrainSlope * 0.5;
 
-            // Award flip bonus!
             this.game.onFlipCompleted();
           }
         }
 
-        // Post-flip Active Gyro Stabilization until landing
         if (this.stabilizingAfterFlip) {
           if (car.grounded) {
             this.stabilizingAfterFlip = false;
@@ -1535,41 +1669,48 @@
       }
 
       spawnThrusterParticles(car) {
-        // Thruster local offset on the rear-side of the Tesla Roadster
         const cos = Math.cos(car.angle);
         const sin = Math.sin(car.angle);
-        const localX = -38;
+        const localX = -car.wheelBase * 0.5 - 4;
         const localY = -4;
 
         const worldX = car.x + localX * cos - localY * sin;
         const worldY = car.y + localX * sin + localY * cos;
 
-        // Exhaust direction points backward and slightly downward relative to car
         const exhaustAngle = car.angle + Math.PI - 0.25;
         this.game.particles.emitRocketExhaust(worldX, worldY, exhaustAngle, car.vx, car.vy);
       }
     }
 
     /* =========================================================
-       6. PLAYER CAR (Futuristic Red Tesla Roadster & Physics)
+       7. PLAYER CAR (5 Distinct Vehicle Designs & Physics)
        ========================================================= */
     class PlayerCar {
       constructor(game) {
         this.game = game;
-        this.wheelBase = 76; // Distance between front and rear axles
-        this.wheelRadius = 17;
-        this.chassisHeight = 26;
+        this.carId = "silver_sport";
+        this.specs = VEHICLE_CONFIGS.silver_sport.specs;
         this.reset();
       }
 
       reset() {
+        const carId = this.game.saveManager.data.selectedCar || "silver_sport";
+        this.carId = VEHICLE_CONFIGS[carId] ? carId : "silver_sport";
+        const cfg = VEHICLE_CONFIGS[this.carId];
+        this.specs = cfg.specs;
+
+        this.wheelBase = this.specs.wheelBase;
+        this.wheelRadius = this.specs.wheelRadius;
+        this.chassisHeight = this.specs.chassisHeight;
+        this.desiredRideHeight = this.specs.rideHeight;
+
         const upg = this.game.saveManager.data.upgrades;
         this.x = 120;
         const startGroundY = this.game.terrain.getHeightAt(this.x);
-        this.y = startGroundY - 36;
+        this.y = startGroundY - this.desiredRideHeight;
         this.vx = 0;
         this.vy = 0;
-        this.angle = 0;
+        this.angle = this.game.terrain.getSlopeAt(this.x);
         this.angularVel = 0;
 
         this.wheelRotation = 0;
@@ -1580,16 +1721,16 @@
         this.crashed = false;
         this.crashReason = "";
 
-        // Upgraded vehicle specs
-        this.enginePower = 540 + (upg.engine - 1) * 62;
-        this.maxSpeed = 620 + (upg.maxSpeed - 1) * 52;
-        this.suspensionStiffness = 22 + (upg.suspension - 1) * 2.5;
-        this.airControlTorque = 5.2 + (upg.airControl - 1) * 0.55;
+        // Tuned vehicle specs scaling with Upgrades
+        this.enginePower = this.specs.enginePower + (upg.engine - 1) * 65;
+        this.maxSpeed = this.specs.maxSpeed + (upg.maxSpeed - 1) * 55;
+        this.traction = this.specs.traction;
+        this.suspensionStiffness = this.specs.suspensionStiffness + (upg.suspension - 1) * 2.5;
+        this.airControlTorque = this.specs.airControlTorque + (upg.airControl - 1) * 0.6;
       }
 
       updatePhysicsSubstep(dt) {
         if (this.crashed) {
-          // Dead-car slide physics
           this.vy += 980 * dt;
           this.x += this.vx * dt;
           this.y += this.vy * dt;
@@ -1606,10 +1747,8 @@
         const rocket = this.game.rocket;
         const terrain = this.game.terrain;
 
-        // Effective gravity (reduced during active Rocket Flight)
         const gravity = rocket.isBoosting ? 340 : 980;
 
-        // Calculate Front & Rear wheel world positions
         const halfBase = this.wheelBase * 0.5;
         const cos = Math.cos(this.angle);
         const sin = Math.sin(this.angle);
@@ -1620,82 +1759,71 @@
         const rearTerrainY = terrain.getHeightAt(rearWheelX);
         const frontTerrainY = terrain.getHeightAt(frontWheelX);
 
-        const desiredRideHeight = this.wheelRadius + 13;
-        const rearWheelWorldY = this.y - halfBase * sin + desiredRideHeight * cos;
-        const frontWheelWorldY = this.y + halfBase * sin + desiredRideHeight * cos;
+        const rearWheelWorldY = this.y - halfBase * sin + this.desiredRideHeight * cos;
+        const frontWheelWorldY = this.y + halfBase * sin + this.desiredRideHeight * cos;
 
         const rearPenetration = rearWheelWorldY - rearTerrainY;
         const frontPenetration = frontWheelWorldY - frontTerrainY;
 
-        const rearTouching = rearPenetration > -6 && !rocket.isBoosting;
-        const frontTouching = frontPenetration > -6 && !rocket.isBoosting;
+        const rearTouching = rearPenetration >= -4 && !rocket.isBoosting && !terrain.isGapAt(rearWheelX);
+        const frontTouching = frontPenetration >= -4 && !rocket.isBoosting && !terrain.isGapAt(frontWheelX);
         const wasGrounded = this.grounded;
         this.grounded = rearTouching || frontTouching;
 
-        // Detect hard landing for suspension thud, dust particles & screen shake
-        if (!wasGrounded && this.grounded && this.vy > 290) {
-          const impact = Math.min(12, (this.vy - 260) / 45);
+        if (!wasGrounded && this.grounded && this.vy > 280) {
+          const impact = Math.min(12, (this.vy - 240) / 45);
           this.game.camera.addShake(impact);
           this.game.audio.playHardLanding();
           this.game.particles.emitDust(rearWheelX, rearTerrainY, 10);
           this.game.particles.emitDust(frontWheelX, frontTerrainY, 10);
         }
 
-        // Visual suspension compression for wheel rendering
-        this.rearWheelCompression = rearTouching ? Math.max(-6, Math.min(10, rearPenetration * 0.45)) : -4;
-        this.frontWheelCompression = frontTouching ? Math.max(-6, Math.min(10, frontPenetration * 0.45)) : -4;
+        this.rearWheelCompression = rearTouching ? Math.max(-6, Math.min(12, rearPenetration * 0.5)) : -3;
+        this.frontWheelCompression = frontTouching ? Math.max(-6, Math.min(12, frontPenetration * 0.5)) : -3;
 
         if (this.grounded) {
-          // Grounded Suspension & Slope Alignment
-          const targetGroundY = (rearTerrainY + frontTerrainY) * 0.5 - desiredRideHeight;
+          const targetGroundY = (rearTerrainY + frontTerrainY) * 0.5 - this.desiredRideHeight;
           const targetAngle = Math.atan2(frontTerrainY - rearTerrainY, this.wheelBase);
 
-          // Check if car landed upside down (roof crash)
           let normalizedAngle = ((this.angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
           if (normalizedAngle > Math.PI) normalizedAngle -= Math.PI * 2;
-          if (Math.abs(normalizedAngle - targetAngle) > Math.PI * 0.62 && !rocket.flipActive) {
+          if (Math.abs(normalizedAngle - targetAngle) > Math.PI * 0.65 && !rocket.flipActive && Math.abs(this.vy) > 120) {
             this.game.triggerCrash("ROOF IMPACT ON LANDING");
             return;
           }
 
-          // Smooth spring-damper vertical suspension response
           const yError = targetGroundY - this.y;
           this.vy += yError * this.suspensionStiffness * 1.4 * dt;
-          this.vy *= Math.pow(0.04, dt); // Damping
+          this.vy *= Math.pow(0.04, dt);
           if (this.y > targetGroundY + 6) {
             this.y = targetGroundY + 6;
             if (this.vy > 0) this.vy = 0;
           }
 
-          // Align chassis tilt smoothly to terrain slope
           const angleDiff = rocket.shortestAngleDiff(this.angle, targetAngle);
           this.angularVel = angleDiff * 16;
           this.angle += this.angularVel * dt;
 
-          // Driving Acceleration / Braking along slope
           const slopeFactor = Math.sin(targetAngle);
           if (input.accel) {
-            this.vx += (this.enginePower - slopeFactor * 310) * dt;
-            // Kick up small tire dust when accelerating hard
+            const driveForce = this.enginePower * this.traction;
+            this.vx += (driveForce - slopeFactor * 310) * dt;
             if (Math.random() < 0.35) {
               this.game.particles.emitDust(rearWheelX, rearTerrainY, 1);
             }
           } else if (input.brake) {
             if (this.vx > 20) {
-              this.vx -= 780 * dt; // Strong carbon-ceramic brakes
+              this.vx -= 780 * this.traction * dt;
             } else {
-              this.vx -= 340 * dt; // Reverse gear
+              this.vx -= 340 * this.traction * dt;
             }
           } else {
-            // Natural rolling friction & slope gravity
             this.vx -= slopeFactor * 260 * dt;
             this.vx *= Math.pow(0.45, dt);
           }
         } else {
-          // Airborne Physics
           this.vy += gravity * dt;
 
-          // Manual air pitch control (when not locked in automatic 360° flip)
           if (!rocket.flipActive) {
             if (input.tiltBack || input.accel) {
               this.angularVel -= this.airControlTorque * dt;
@@ -1709,34 +1837,51 @@
             this.angle += this.angularVel * dt;
           }
 
-          // Slight air drag
           this.vx *= Math.pow(0.92, dt);
         }
 
-        // Clamp horizontal velocity
         const currentMax = rocket.isBoosting ? this.maxSpeed * 1.35 : this.maxSpeed;
         this.vx = Math.max(-240, Math.min(currentMax, this.vx));
         this.x = Math.max(40, this.x + this.vx * dt);
         this.y += this.vy * dt;
 
-        // Rotate alloy wheels proportionally to velocity
         this.wheelRotation += (this.vx * dt) / this.wheelRadius;
 
-        // Check if car fell deep into a chasm pit
-        if (this.y > terrain.baseY + 260) {
+        if (this.y > terrain.baseY + 280) {
           this.game.triggerCrash("FELL INTO CHASM ABYSS");
         }
       }
 
       render(ctx) {
-        const rocket = this.game.rocket;
-        const thrusterOpen = rocket.thrusterOpenProgress;
-
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        // 1. Dynamic Lighting Glow under/around car when Rocket Flight is active
+        const rocket = this.game.rocket;
+        const thrusterOpen = rocket.thrusterOpenProgress;
+
+        if (this.carId === "red_racer") {
+          this.renderRedRacer(ctx, thrusterOpen);
+        } else if (this.carId === "neon_gt") {
+          this.renderNeonGT(ctx, thrusterOpen);
+        } else if (this.carId === "offroad_beast") {
+          this.renderOffroadBeast(ctx, thrusterOpen);
+        } else if (this.carId === "golden_phantom") {
+          this.renderGoldenPhantom(ctx, thrusterOpen);
+        } else {
+          this.renderSilverSport(ctx, thrusterOpen);
+        }
+
+        ctx.restore();
+      }
+
+      // -------------------------------------------------------------
+      // 1. SILVER SPORT (Futuristic Roadster)
+      // -------------------------------------------------------------
+      renderSilverSport(ctx, thrusterOpen) {
+        const rocket = this.game.rocket;
+        const halfBase = this.wheelBase * 0.5;
+
         if (rocket.isBoosting || thrusterOpen > 0.2) {
           const glowGrad = ctx.createRadialGradient(-28, 6, 6, -15, 6, 95);
           glowGrad.addColorStop(0, `rgba(0, 225, 255, ${0.55 * thrusterOpen})`);
@@ -1748,25 +1893,13 @@
           ctx.fill();
         }
 
-        // 2. Direct Attached Rocket Thruster Exhaust Flame Cones (rotates with car!)
         if (rocket.isBoosting || rocket.flipActive) {
-          this.drawAttachedRocketFlame(ctx);
+          this.drawAttachedRocketFlame(ctx, -52, -3, 78);
         }
 
-        // 3. LED Headlight Beam Cone
-        const beamGrad = ctx.createLinearGradient(48, 0, 185, 18);
-        beamGrad.addColorStop(0, "rgba(186, 230, 253, 0.35)");
-        beamGrad.addColorStop(1, "rgba(186, 230, 253, 0)");
-        ctx.fillStyle = beamGrad;
-        ctx.beginPath();
-        ctx.moveTo(50, -3);
-        ctx.lineTo(185, -24);
-        ctx.lineTo(185, 28);
-        ctx.lineTo(50, 5);
-        ctx.closePath();
-        ctx.fill();
+        this.drawHeadlightBeam(ctx, 48, 0, 185, 20);
 
-        // 4. Panoramic Tinted Glass Canopy
+        // Canopy
         const glassGrad = ctx.createLinearGradient(0, -24, 0, -4);
         glassGrad.addColorStop(0, "#1e293b");
         glassGrad.addColorStop(1, "#020617");
@@ -1777,54 +1910,40 @@
         ctx.lineTo(-24, -8);
         ctx.closePath();
         ctx.fill();
-        ctx.strokeStyle = "rgba(148, 163, 184, 0.65)";
+        ctx.strokeStyle = "rgba(203, 213, 225, 0.75)";
         ctx.lineWidth = 1.4;
         ctx.stroke();
 
-        // 5. Sleek Aerodynamic Red Tesla Roadster Body
+        // Silver Body
         const bodyGrad = ctx.createLinearGradient(-56, -16, 56, 14);
-        bodyGrad.addColorStop(0, "#99001b");
-        bodyGrad.addColorStop(0.35, "#ff173c");
-        bodyGrad.addColorStop(0.7, "#ff3859");
-        bodyGrad.addColorStop(1, "#b8001f");
-
+        bodyGrad.addColorStop(0, "#cbd5e1");
+        bodyGrad.addColorStop(0.35, "#f1f5f9");
+        bodyGrad.addColorStop(0.7, "#94a3b8");
+        bodyGrad.addColorStop(1, "#475569");
         ctx.fillStyle = bodyGrad;
+
         ctx.beginPath();
-        ctx.moveTo(-54, -7);   // Rear spoiler tip
-        ctx.lineTo(-40, -13);  // Rear deck
-        ctx.lineTo(-20, -9);   // Canopy rear base
-        ctx.lineTo(26, -10);   // Windshield base
-        ctx.quadraticCurveTo(50, -6, 56, 4); // Sleek low nose
-        ctx.lineTo(52, 11);    // Front carbon splitter
-        ctx.lineTo(-48, 11);   // Underbody aero skirt
-        ctx.lineTo(-55, 2);    // Rear diffuser
+        ctx.moveTo(-54, -7);
+        ctx.lineTo(-40, -13);
+        ctx.lineTo(-20, -9);
+        ctx.lineTo(26, -10);
+        ctx.quadraticCurveTo(50, -6, 56, 4);
+        ctx.lineTo(52, 11);
+        ctx.lineTo(-48, 11);
+        ctx.lineTo(-55, 2);
         ctx.closePath();
         ctx.fill();
 
-        // Metallic Specular Highlight Line along body crease
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.55)";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
         ctx.lineWidth = 1.6;
         ctx.beginPath();
         ctx.moveTo(-44, -4);
         ctx.quadraticCurveTo(6, -8, 50, 1);
         ctx.stroke();
 
-        // Carbon-Fiber Side Aero Intake Scoop
-        ctx.fillStyle = "#090d16";
-        ctx.beginPath();
-        ctx.moveTo(-4, -2);
-        ctx.lineTo(18, -4);
-        ctx.lineTo(13, 6);
-        ctx.lineTo(-10, 6);
-        ctx.closePath();
-        ctx.fill();
-
-        // 6. Retractable Side/Rear SpaceX Rocket Thruster Pod
-        const podOffsetY = -2 - thrusterOpen * 3.5;
+        // Thruster Pod
         ctx.save();
-        ctx.translate(-36, podOffsetY);
-        ctx.rotate(-0.15 * thrusterOpen);
-        // Thruster housing
+        ctx.translate(-36, -2 - thrusterOpen * 3.5);
         ctx.fillStyle = "#1e293b";
         ctx.strokeStyle = thrusterOpen > 0.3 ? "#00e1ff" : "#64748b";
         ctx.lineWidth = 1.5;
@@ -1832,31 +1951,11 @@
         ctx.roundRect(-12, -5, 22, 10, 3);
         ctx.fill();
         ctx.stroke();
-        // Nozzle cone
-        ctx.fillStyle = "#475569";
-        ctx.beginPath();
-        ctx.moveTo(-12, -3);
-        ctx.lineTo(-17, -6);
-        ctx.lineTo(-17, 6);
-        ctx.lineTo(-12, 3);
-        ctx.closePath();
-        ctx.fill();
-        // Glowing plasma core indicator on side thruster
-        ctx.fillStyle = (rocket.isBoosting || rocket.flipActive) ? "#00ffff" : "#38bdf8";
-        ctx.beginPath();
-        ctx.arc(-1, 0, 2.6, 0, Math.PI * 2);
-        ctx.fill();
         ctx.restore();
 
-        // 7. Front LED Headlight & Rear Plasma Tail-Light
+        // Lights
         ctx.fillStyle = "#e0f2fe";
-        ctx.beginPath();
-        ctx.polygon =ctx.moveTo(46, -2);
-        ctx.lineTo(55, 1);
-        ctx.lineTo(52, 4);
-        ctx.lineTo(44, 1);
-        ctx.closePath();
-        ctx.fill();
+        ctx.fillRect(46, -2, 8, 4);
 
         ctx.fillStyle = "#ff0033";
         ctx.shadowColor = "#ff0033";
@@ -1864,96 +1963,417 @@
         ctx.fillRect(-54, -5, 5, 7);
         ctx.shadowBlur = 0;
 
-        // 8. Rear & Front Sport Alloy Wheels with Suspension Compression
-        this.drawWheel(ctx, -this.wheelBase * 0.5, 12 - this.rearWheelCompression);
-        this.drawWheel(ctx, this.wheelBase * 0.5, 12 - this.frontWheelCompression);
-
-        ctx.restore();
+        this.drawWheel(ctx, -halfBase, 12 - this.rearWheelCompression, this.wheelRadius, "sport");
+        this.drawWheel(ctx, halfBase, 12 - this.frontWheelCompression, this.wheelRadius, "sport");
       }
 
-      drawAttachedRocketFlame(ctx) {
-        const flicker = 0.82 + Math.random() * 0.38;
-        const length = 78 * flicker;
+      // -------------------------------------------------------------
+      // 2. RED RACER (Aggressive Crimson GT Track Car)
+      // -------------------------------------------------------------
+      renderRedRacer(ctx, thrusterOpen) {
+        const halfBase = this.wheelBase * 0.5;
 
-        ctx.save();
-        ctx.translate(-52, -3);
-        ctx.rotate(-0.18); // Aimed slightly downward & backward for lift + thrust
+        this.drawHeadlightBeam(ctx, 48, -2, 190, 22);
 
-        // Outer fiery orange plasma plume
-        const outerGrad = ctx.createLinearGradient(0, 0, -length, 0);
-        outerGrad.addColorStop(0, "rgba(0, 225, 255, 0.95)");
-        outerGrad.addColorStop(0.45, "rgba(255, 115, 0, 0.9)");
-        outerGrad.addColorStop(1, "rgba(255, 30, 0, 0)");
+        // High Downforce Rear GT Wing
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(-52, -22, 22, 4);
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(-46, -18, 3, 10);
+        ctx.fillRect(-36, -18, 3, 10);
 
-        ctx.fillStyle = outerGrad;
+        // Dark Tinted Canopy
+        ctx.fillStyle = "#090d16";
         ctx.beginPath();
-        ctx.moveTo(0, -6);
-        ctx.lineTo(-length, -14 * flicker);
-        ctx.lineTo(-length * 0.75, 0);
-        ctx.lineTo(-length, 14 * flicker);
-        ctx.lineTo(0, 6);
+        ctx.moveTo(-22, -8);
+        ctx.lineTo(-10, -23);
+        ctx.lineTo(18, -23);
+        ctx.lineTo(28, -8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = "rgba(239, 68, 68, 0.8)";
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+
+        // Crimson Red Body
+        const redGrad = ctx.createLinearGradient(-54, -14, 54, 12);
+        redGrad.addColorStop(0, "#99001b");
+        redGrad.addColorStop(0.35, "#ff173c");
+        redGrad.addColorStop(0.75, "#ff2d55");
+        redGrad.addColorStop(1, "#b3001b");
+        ctx.fillStyle = redGrad;
+
+        ctx.beginPath();
+        ctx.moveTo(-52, -8);
+        ctx.lineTo(-24, -9);
+        ctx.lineTo(24, -9);
+        ctx.lineTo(52, 2);
+        ctx.lineTo(50, 11);
+        ctx.lineTo(-48, 11);
         ctx.closePath();
         ctx.fill();
 
-        // Inner white-blue superheated Mach diamond core
+        // Bold White Racing GT Stripes
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(-38, -6, 82, 3);
+        ctx.fillRect(-38, -1, 82, 1.8);
+
+        // Front Splitter
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(40, 10, 14, 3);
+
+        // Lights
+        ctx.fillStyle = "#fef08a";
+        ctx.fillRect(44, -1, 7, 4);
+        ctx.fillStyle = "#ff002b";
+        ctx.fillRect(-52, -6, 5, 6);
+
+        this.drawWheel(ctx, -halfBase, 12 - this.rearWheelCompression, this.wheelRadius, "gold_sport");
+        this.drawWheel(ctx, halfBase, 12 - this.frontWheelCompression, this.wheelRadius, "gold_sport");
+      }
+
+      // -------------------------------------------------------------
+      // 3. NEON GT (Stealth Dark Cyan Cyber Hypercar)
+      // -------------------------------------------------------------
+      renderNeonGT(ctx, thrusterOpen) {
+        const rocket = this.game.rocket;
+        const halfBase = this.wheelBase * 0.5;
+
+        // Glowing Neon Cyan Underglow
+        const underglow = ctx.createRadialGradient(0, 8, 8, 0, 8, 85);
+        underglow.addColorStop(0, "rgba(0, 240, 255, 0.7)");
+        underglow.addColorStop(0.5, "rgba(0, 240, 255, 0.25)");
+        underglow.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = underglow;
+        ctx.fillRect(-65, 4, 130, 24);
+
+        if (rocket.isBoosting || rocket.flipActive) {
+          this.drawAttachedRocketFlame(ctx, -54, -2, 85);
+        }
+
+        this.drawHeadlightBeam(ctx, 50, -3, 210, 22);
+
+        // Jet Cockpit
+        const canopyGrad = ctx.createLinearGradient(0, -22, 0, -4);
+        canopyGrad.addColorStop(0, "#0369a1");
+        canopyGrad.addColorStop(1, "#020617");
+        ctx.fillStyle = canopyGrad;
+        ctx.beginPath();
+        ctx.moveTo(-20, -6);
+        ctx.quadraticCurveTo(8, -23, 32, -6);
+        ctx.lineTo(-20, -6);
+        ctx.closePath();
+        ctx.fill();
+
+        // Stealth Obsidian Carbon Body
+        const carbonGrad = ctx.createLinearGradient(-52, -12, 52, 12);
+        carbonGrad.addColorStop(0, "#090d16");
+        carbonGrad.addColorStop(0.4, "#1e293b");
+        carbonGrad.addColorStop(0.8, "#0f172a");
+        carbonGrad.addColorStop(1, "#020617");
+        ctx.fillStyle = carbonGrad;
+
+        ctx.beginPath();
+        ctx.moveTo(-52, -6);
+        ctx.lineTo(-32, -12);
+        ctx.lineTo(-14, -7);
+        ctx.lineTo(26, -7);
+        ctx.lineTo(54, 2);
+        ctx.lineTo(50, 10);
+        ctx.lineTo(-48, 10);
+        ctx.closePath();
+        ctx.fill();
+
+        // Neon Cyan Contour Lines
+        ctx.strokeStyle = "#00f0ff";
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(-46, 2);
+        ctx.lineTo(-8, 2);
+        ctx.lineTo(16, -4);
+        ctx.lineTo(48, 2);
+        ctx.stroke();
+
+        ctx.fillStyle = "#00f0ff";
+        ctx.fillRect(46, -2, 8, 3.5);
+
+        this.drawWheel(ctx, -halfBase, 11 - this.rearWheelCompression, this.wheelRadius, "aerodisc");
+        this.drawWheel(ctx, halfBase, 11 - this.frontWheelCompression, this.wheelRadius, "aerodisc");
+      }
+
+      // -------------------------------------------------------------
+      // 4. OFFROAD BEAST (Lifted Rugged 4x4 Buggy)
+      // -------------------------------------------------------------
+      renderOffroadBeast(ctx, thrusterOpen) {
+        const halfBase = this.wheelBase * 0.5;
+
+        this.drawHeadlightBeam(ctx, 20, -26, 215, 30);
+
+        // Tubular Roll Cage
+        ctx.strokeStyle = "#1e293b";
+        ctx.lineWidth = 3.6;
+        ctx.beginPath();
+        ctx.moveTo(-34, -4);
+        ctx.lineTo(-24, -28);
+        ctx.lineTo(16, -28);
+        ctx.lineTo(28, -4);
+        ctx.lineTo(-34, -4);
+        ctx.stroke();
+
+        // Roof Fog Lamps
+        ctx.fillStyle = "#fde047";
+        ctx.shadowColor = "#fde047";
+        ctx.shadowBlur = 10;
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.arc(6 + i * 8, -30, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+
+        // Yellow Rugged Panels
+        ctx.fillStyle = "#eab308";
+        ctx.beginPath();
+        ctx.moveTo(-38, -4);
+        ctx.lineTo(30, -4);
+        ctx.lineTo(46, 3);
+        ctx.lineTo(40, 12);
+        ctx.lineTo(-38, 12);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "#18181b";
+        ctx.fillRect(-28, 0, 56, 5);
+
+        // Spare tire on back
+        ctx.fillStyle = "#09090b";
+        ctx.beginPath();
+        ctx.arc(-44, -12, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#71717a";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Red Shock Absorber Springs
+        this.drawCoilSpring(ctx, -halfBase, 4, -halfBase, 16 - this.rearWheelCompression);
+        this.drawCoilSpring(ctx, halfBase, 4, halfBase, 16 - this.frontWheelCompression);
+
+        this.drawWheel(ctx, -halfBase, 16 - this.rearWheelCompression, this.wheelRadius, "mud_tread");
+        this.drawWheel(ctx, halfBase, 16 - this.frontWheelCompression, this.wheelRadius, "mud_tread");
+      }
+
+      // -------------------------------------------------------------
+      // 5. GOLDEN PHANTOM (Premium Forged Carbon Hypercar)
+      // -------------------------------------------------------------
+      renderGoldenPhantom(ctx, thrusterOpen) {
+        const rocket = this.game.rocket;
+        const halfBase = this.wheelBase * 0.5;
+
+        const underglow = ctx.createRadialGradient(0, 8, 8, 0, 8, 85);
+        underglow.addColorStop(0, "rgba(234, 179, 8, 0.75)");
+        underglow.addColorStop(0.5, "rgba(234, 179, 8, 0.2)");
+        underglow.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = underglow;
+        ctx.fillRect(-65, 4, 130, 24);
+
+        if (rocket.isBoosting || rocket.flipActive) {
+          this.drawAttachedRocketFlame(ctx, -54, -2, 90);
+        }
+
+        this.drawHeadlightBeam(ctx, 50, -3, 215, 22);
+
+        // Gold Cockpit Glass
+        const glassGrad = ctx.createLinearGradient(0, -22, 0, -4);
+        glassGrad.addColorStop(0, "#78350f");
+        glassGrad.addColorStop(1, "#0f172a");
+        ctx.fillStyle = glassGrad;
+        ctx.beginPath();
+        ctx.moveTo(-22, -6);
+        ctx.quadraticCurveTo(8, -24, 32, -6);
+        ctx.lineTo(-22, -6);
+        ctx.closePath();
+        ctx.fill();
+
+        // Forged Gold & Carbon Body
+        const goldGrad = ctx.createLinearGradient(-54, -14, 54, 14);
+        goldGrad.addColorStop(0, "#ca8a04");
+        goldGrad.addColorStop(0.35, "#fef08a");
+        goldGrad.addColorStop(0.65, "#eab308");
+        goldGrad.addColorStop(1, "#854d0e");
+        ctx.fillStyle = goldGrad;
+
+        ctx.beginPath();
+        ctx.moveTo(-54, -6);
+        ctx.lineTo(-34, -12);
+        ctx.lineTo(-14, -7);
+        ctx.lineTo(26, -7);
+        ctx.lineTo(54, 2);
+        ctx.lineTo(50, 10);
+        ctx.lineTo(-50, 10);
+        ctx.closePath();
+        ctx.fill();
+
+        // Carbon Aero Side Skirt
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(-44, 7, 88, 3.5);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(46, -2, 8, 3.5);
+
+        this.drawWheel(ctx, -halfBase, 11 - this.rearWheelCompression, this.wheelRadius, "gold_sport");
+        this.drawWheel(ctx, halfBase, 11 - this.frontWheelCompression, this.wheelRadius, "gold_sport");
+      }
+
+      // -------------------------------------------------------------
+      // SHARED RENDERING HELPERS
+      // -------------------------------------------------------------
+      drawHeadlightBeam(ctx, x, y, length, spread) {
+        ctx.save();
+        const beamGrad = ctx.createLinearGradient(x, y, x + length, y);
+        beamGrad.addColorStop(0, "rgba(224, 242, 254, 0.4)");
+        beamGrad.addColorStop(0.35, "rgba(186, 230, 253, 0.2)");
+        beamGrad.addColorStop(1, "rgba(224, 242, 254, 0)");
+        ctx.fillStyle = beamGrad;
+        ctx.beginPath();
+        ctx.moveTo(x, y - 2);
+        ctx.lineTo(x + length, y - spread * 0.7);
+        ctx.lineTo(x + length, y + spread * 0.7);
+        ctx.lineTo(x, y + 4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      drawAttachedRocketFlame(ctx, x, y, baseLength) {
+        const flicker = 0.85 + Math.random() * 0.3;
+        const len = baseLength * flicker;
+        ctx.save();
+        ctx.translate(x, y);
+
+        const flameGrad = ctx.createLinearGradient(0, 0, -len, 0);
+        flameGrad.addColorStop(0, "rgba(0, 240, 255, 0.95)");
+        flameGrad.addColorStop(0.4, "rgba(255, 102, 0, 0.9)");
+        flameGrad.addColorStop(1, "rgba(255, 0, 0, 0)");
+        ctx.fillStyle = flameGrad;
+        ctx.beginPath();
+        ctx.moveTo(0, -5);
+        ctx.lineTo(-len, 0);
+        ctx.lineTo(0, 5);
+        ctx.closePath();
+        ctx.fill();
+
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
-        ctx.moveTo(0, -3.5);
-        ctx.lineTo(-length * 0.48, 0);
-        ctx.lineTo(0, 3.5);
+        ctx.moveTo(0, -2.5);
+        ctx.lineTo(-len * 0.45, 0);
+        ctx.lineTo(0, 2.5);
         ctx.closePath();
         ctx.fill();
-
         ctx.restore();
       }
 
-      drawWheel(ctx, wx, wy) {
+      drawCoilSpring(ctx, x1, y1, x2, y2) {
+        ctx.save();
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        const steps = 6;
+        for (let i = 1; i < steps; i++) {
+          const t = i / steps;
+          const px = x1 + (x2 - x1) * t + (i % 2 === 0 ? 3 : -3);
+          const py = y1 + (y2 - y1) * t;
+          ctx.lineTo(px, py);
+        }
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      drawWheel(ctx, wx, wy, radius, type) {
         ctx.save();
         ctx.translate(wx, wy);
 
-        // Tire rubber with tread shading
-        ctx.fillStyle = "#0f172a";
-        ctx.strokeStyle = "#1e293b";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.arc(0, 0, this.wheelRadius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-
-        // Red performance brake caliper (stationary relative to hub)
-        ctx.fillStyle = "#ef4444";
-        ctx.beginPath();
-        ctx.arc(-4, -3, 5, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Rotating multi-spoke alloy rim
-        ctx.rotate(this.wheelRotation);
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(0, 0, this.wheelRadius - 5, 0, Math.PI * 2);
-        ctx.stroke();
-
-        for (let i = 0; i < 5; i++) {
-          const a = (i * Math.PI * 2) / 5;
+        if (type === "mud_tread") {
+          ctx.fillStyle = "#09090b";
           ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.lineTo(Math.cos(a) * (this.wheelRadius - 5), Math.sin(a) * (this.wheelRadius - 5));
-          ctx.stroke();
-        }
+          ctx.arc(0, 0, radius, 0, Math.PI * 2);
+          ctx.fill();
 
-        // Center Tesla hub cap
-        ctx.fillStyle = "#ff173c";
-        ctx.beginPath();
-        ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
-        ctx.fill();
+          ctx.rotate(this.wheelRotation);
+          ctx.strokeStyle = "#27272a";
+          ctx.lineWidth = 3.5;
+          for (let i = 0; i < 8; i++) {
+            const a = (i * Math.PI * 2) / 8;
+            ctx.beginPath();
+            ctx.moveTo(Math.cos(a) * (radius - 6), Math.sin(a) * (radius - 6));
+            ctx.lineTo(Math.cos(a) * radius, Math.sin(a) * radius);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = "#18181b";
+          ctx.beginPath();
+          ctx.arc(0, 0, radius - 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "#eab308";
+          ctx.lineWidth = 1.8;
+          ctx.stroke();
+
+        } else if (type === "aerodisc") {
+          ctx.fillStyle = "#020617";
+          ctx.beginPath();
+          ctx.arc(0, 0, radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.rotate(this.wheelRotation);
+          ctx.fillStyle = "#0f172a";
+          ctx.beginPath();
+          ctx.arc(0, 0, radius - 3.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = "#00f0ff";
+          ctx.lineWidth = 1.8;
+          for (let i = 0; i < 4; i++) {
+            const a = (i * Math.PI * 2) / 4;
+            ctx.beginPath();
+            ctx.arc(0, 0, radius - 6, a, a + 0.9);
+            ctx.stroke();
+          }
+
+        } else {
+          // sport / gold_sport
+          ctx.fillStyle = "#0f172a";
+          ctx.beginPath();
+          ctx.arc(0, 0, radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = "#ef4444";
+          ctx.beginPath();
+          ctx.arc(-radius * 0.3, -radius * 0.3, radius * 0.32, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.rotate(this.wheelRotation);
+          ctx.strokeStyle = type === "gold_sport" ? "#eab308" : "#cbd5e1";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(0, 0, radius - 4, 0, Math.PI * 2);
+          ctx.stroke();
+
+          for (let i = 0; i < 5; i++) {
+            const a = (i * Math.PI * 2) / 5;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(Math.cos(a) * (radius - 4), Math.sin(a) * (radius - 4));
+            ctx.stroke();
+          }
+        }
 
         ctx.restore();
       }
     }
 
     /* =========================================================
-       7. OBSTACLE MANAGER (7 Hazard Types, Detection & Auto-Assist)
+       8. OBSTACLE MANAGER (Hazards, Warnings, Collision)
        ========================================================= */
     class ObstacleManager {
       constructor(game) {
@@ -1975,7 +2395,6 @@
           const x = this.nextSpawnX;
           const distMeters = x / 22;
 
-          // Avoid spawning directly inside or on the edge of a chasm gap
           if (terrain.isGapAt(x) || terrain.isGapAt(x - 110) || terrain.isGapAt(x + 110)) {
             this.nextSpawnX += 240;
             continue;
@@ -2024,7 +2443,6 @@
 
           this.obstacles.push(obs);
 
-          // Spawn spacing tightens slightly as difficulty increases
           const minSpacing = Math.max(430, 740 - distMeters * 0.22);
           this.nextSpawnX += minSpacing + Math.random() * 340;
         }
@@ -2056,7 +2474,6 @@
         let nearestHazard = null;
         let nearestDist = Infinity;
 
-        // 1. Check Chasm Gaps for Warning, Auto-Assist, and Clearance
         for (let i = 0; i < terrain.gaps.length; i++) {
           const g = terrain.gaps[i];
           const dx = g.startX - car.x;
@@ -2070,7 +2487,6 @@
           }
         }
 
-        // 2. Check Steep Slopes for Warning
         for (let i = 0; i < terrain.steepSlopes.length; i++) {
           const s = terrain.steepSlopes[i];
           const dx = s.startX - car.x;
@@ -2080,15 +2496,13 @@
           }
         }
 
-        // 3. Update & Check Physical Obstacles
         for (let i = 0; i < this.obstacles.length; i++) {
           const o = this.obstacles[i];
 
-          // Move traffic vehicles along terrain
           if (o.type === "TRAFFIC_CAR") {
             o.x += o.vx * dt;
             if (terrain.isGapAt(o.x + Math.sign(o.vx) * 65)) {
-              o.vx = -o.vx; // Turn around at chasm edges
+              o.vx = -o.vx;
             }
             o.y = terrain.getHeightAt(o.x);
             o.slope = terrain.getSlopeAt(o.x);
@@ -2101,15 +2515,13 @@
             nearestHazard = { label: o.label, dist: dx, isAutoTriggerTarget: true };
           }
 
-          // Check if car cleared the obstacle in the air
           if (!o.cleared && car.x > o.x + o.width * 0.65 && !car.crashed) {
             o.cleared = true;
             this.game.onObstacleCleared("OBSTACLE CLEARED!");
           }
 
-          // Collision Detection (Actual position & hitbox check)
-          if (!car.crashed && Math.abs(car.x - o.x) < (o.width * 0.48 + 42)) {
-            const carBottomY = car.y + 22;
+          if (!car.crashed && Math.abs(car.x - o.x) < (o.width * 0.48 + car.wheelBase * 0.5)) {
+            const carBottomY = car.y + car.desiredRideHeight;
             const obsTopY = o.y - o.height + 6;
             if (carBottomY > obsTopY) {
               this.game.triggerCrash(`CRASHED INTO ${o.label}`);
@@ -2118,13 +2530,11 @@
           }
         }
 
-        // Update HUD Warning Indicator
         this.activeWarning = nearestHazard;
         if (nearestHazard && nearestHazard.dist < 420) {
           this.game.audio.playWarningBeep();
         }
 
-        // Auto-Assist Evasive Rocket Boost Mode
         if (
           this.game.saveManager.data.settings.autoAssist &&
           nearestHazard &&
@@ -2132,7 +2542,6 @@
           rocket.autoAssistCooldown <= 0 &&
           rocket.canActivate()
         ) {
-          // Trigger distance scales dynamically with car speed so jump lands cleanly over obstacle
           const triggerDist = Math.max(135, Math.min(275, car.vx * 0.42));
           if (nearestHazard.dist <= triggerDist && nearestHazard.dist > 45 && car.vx > 110) {
             rocket.activate(true);
@@ -2153,7 +2562,6 @@
           ctx.rotate(o.slope);
 
           if (o.type === "BARRIER") {
-            // Futuristic Laser Road Barrier
             ctx.fillStyle = "#1e293b";
             ctx.fillRect(-18, -46, 8, 46);
             ctx.fillRect(10, -46, 8, 46);
@@ -2164,7 +2572,6 @@
             ctx.fillRect(-16, -24, 32, 8);
             ctx.shadowBlur = 0;
           } else if (o.type === "BOULDER") {
-            // Craggy Futuristic Space Boulder
             ctx.fillStyle = "#334155";
             ctx.strokeStyle = "#38bdf8";
             ctx.lineWidth = 2;
@@ -2179,7 +2586,6 @@
             ctx.fill();
             ctx.stroke();
           } else if (o.type === "SPIKES") {
-            // Glowing Plasma Road Spikes
             ctx.fillStyle = "#ff1e42";
             for (let s = -24; s <= 24; s += 16) {
               ctx.beginPath();
@@ -2203,7 +2609,6 @@
             ctx.lineTo(26, -28);
             ctx.closePath();
             ctx.fill();
-            // Wheels
             ctx.fillStyle = "#0f172a";
             ctx.beginPath();
             ctx.arc(-22, -10, 10, 0, Math.PI * 2);
@@ -2217,7 +2622,7 @@
     }
 
     /* =========================================================
-       8. COIN & ENERGY CELL MANAGER
+       9. COIN & ENERGY CELL MANAGER
        ========================================================= */
     class CoinManager {
       constructor(game) {
@@ -2305,7 +2710,6 @@
             ctx.textBaseline = "middle";
             ctx.fillText("$", 0, 1);
           } else {
-            // Glowing Cyan Energy Cell
             ctx.fillStyle = "#00e1ff";
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 2;
@@ -2327,7 +2731,7 @@
     }
 
     /* =========================================================
-       9. PARTICLE SYSTEM (Flames, Sparks, Smoke, Dust, Bursts)
+       10. PARTICLE SYSTEM & CAMERA CONTROLLER
        ========================================================= */
     class ParticleSystem {
       constructor() {
@@ -2440,9 +2844,6 @@
       }
     }
 
-    /* =========================================================
-       10. CAMERA CONTROLLER (Smooth Tracking, Zoom & Shake)
-       ========================================================= */
     class Camera {
       constructor() {
         this.x = 0;
@@ -2452,9 +2853,11 @@
       }
 
       reset(car, canvasWidth, canvasHeight) {
-        this.zoom = Math.min(1.08, Math.max(0.68, canvasWidth / 1180));
-        this.x = car.x - (canvasWidth * 0.28) / this.zoom;
-        this.y = car.y - (canvasHeight * 0.58) / this.zoom;
+        const w = canvasWidth || window.innerWidth || 1180;
+        const h = canvasHeight || window.innerHeight || 720;
+        this.zoom = Math.min(1.08, Math.max(0.68, w / 1180));
+        this.x = car.x - (w * 0.28) / this.zoom;
+        this.y = car.y - (h * 0.58) / this.zoom;
         this.shake = 0;
       }
 
@@ -2482,14 +2885,19 @@
     }
 
     /* =========================================================
-       11. UI MANAGER (Screens, HUD, Garage & Settings)
+       11. USER INTERFACE MANAGER (Car Select, Garage, HUD)
        ========================================================= */
     class UIManager {
       constructor(game) {
         this.game = game;
+        this.previewCarId = this.game.saveManager.data.selectedCar || "silver_sport";
+        this.previewWheelRot = 0;
+        this.activeGarageTab = "showroom"; // "showroom" or "upgrades"
+
         this.bindEvents();
         this.refreshMenuStats();
         this.refreshSettingsUI();
+        this.renderCarCards();
       }
 
       bindEvents() {
@@ -2497,7 +2905,7 @@
           const el = document.getElementById(id);
           if (!el) return;
           el.addEventListener("click", () => {
-            this.game.audio.init();
+            this.game.audio.ensureContext();
             this.game.audio.playClick();
             fn();
           });
@@ -2506,6 +2914,7 @@
         click("btnStartPlay", () => this.game.startGame());
         click("btnGaragePlay", () => this.game.startGame());
         click("btnOpenGarage", () => this.showGarage());
+        click("btnQuickGarage", () => this.showGarage());
         click("btnCloseGarage", () => this.showStartMenu());
         click("btnOpenSettings", () => this.showSettingsFromMenu());
         click("btnCloseSettingsModal", () => this.showStartMenu());
@@ -2520,6 +2929,7 @@
 
         click("btnResume", () => this.game.resumeGame());
         click("btnRestartPause", () => this.game.startGame());
+        click("btnPauseGarage", () => this.showGarage());
         click("btnPauseToMenu", () => this.showStartMenu());
 
         click("btnRetry", () => this.game.startGame());
@@ -2531,6 +2941,34 @@
         click("toggleSfx", () => this.toggleSetting("sfx"));
         click("toggleMusic", () => this.toggleSetting("music"));
         click("toggleSlowMo", () => this.toggleSetting("slowMo"));
+
+        // Garage Tabs
+        const tabShowroom = document.getElementById("tabShowroom");
+        const tabUpgrades = document.getElementById("tabUpgrades");
+        const showroomView = document.getElementById("showroomView");
+        const upgradesView = document.getElementById("upgradesView");
+
+        if (tabShowroom && tabUpgrades) {
+          tabShowroom.onclick = () => {
+            this.activeGarageTab = "showroom";
+            tabShowroom.className = "px-4 py-1.5 rounded-lg font-orbitron font-bold text-xs bg-cyan-500/20 text-cyan-400 border border-cyan-500/40";
+            tabUpgrades.className = "px-4 py-1.5 rounded-lg font-orbitron font-bold text-xs text-slate-400 hover:text-white";
+            showroomView.classList.remove("hidden");
+            showroomView.classList.add("grid");
+            upgradesView.classList.add("hidden");
+            upgradesView.classList.remove("flex");
+          };
+          tabUpgrades.onclick = () => {
+            this.activeGarageTab = "upgrades";
+            tabUpgrades.className = "px-4 py-1.5 rounded-lg font-orbitron font-bold text-xs bg-cyan-500/20 text-cyan-400 border border-cyan-500/40";
+            tabShowroom.className = "px-4 py-1.5 rounded-lg font-orbitron font-bold text-xs text-slate-400 hover:text-white";
+            upgradesView.classList.remove("hidden");
+            upgradesView.classList.add("flex");
+            showroomView.classList.add("hidden");
+            showroomView.classList.remove("grid");
+            this.renderGarageCards();
+          };
+        }
       }
 
       toggleSetting(key) {
@@ -2555,7 +2993,6 @@
         updateBtn("toggleMusic", s.music);
         updateBtn("toggleSlowMo", s.slowMo);
 
-        // HUD Auto-Assist pill
         const dot = document.getElementById("hudAutoDot");
         const txt = document.getElementById("hudAutoText");
         if (dot && txt) {
@@ -2594,6 +3031,9 @@
 
       showGarage() {
         this.game.state = "GARAGE";
+        this.previewCarId = this.game.saveManager.data.selectedCar || "silver_sport";
+        this.renderCarCards();
+        this.updateShowroomDetails();
         this.renderGarageCards();
         this.showScreen("garageScreen");
       }
@@ -2618,14 +3058,158 @@
       refreshMenuStats() {
         const d = this.game.saveManager.data;
         document.getElementById("menuBestDist").textContent = Math.floor(d.bestDistance);
-        document.getElementById("menuTotalCoins").textContent = d.coins;
-        document.getElementById("menuTotalFlips").textContent = d.totalFlips;
+        document.getElementById("menuTotalCoins").textContent = d.coins.toLocaleString();
+        document.getElementById("menuTotalFlips").textContent = d.totalFlips.toString();
+
+        const cfg = VEHICLE_CONFIGS[d.selectedCar] || VEHICLE_CONFIGS.silver_sport;
+        const nameEl = document.getElementById("menuActiveCarName");
+        if (nameEl) nameEl.textContent = cfg.name.toUpperCase();
+      }
+
+      renderCarCards() {
+        const container = document.getElementById("carCardsContainer");
+        if (!container) return;
+        container.innerHTML = "";
+
+        const owned = this.game.saveManager.data.ownedCars || ["silver_sport"];
+        const selected = this.game.saveManager.data.selectedCar || "silver_sport";
+
+        for (const carKey in VEHICLE_CONFIGS) {
+          const cfg = VEHICLE_CONFIGS[carKey];
+          const isOwned = owned.includes(carKey);
+          const isSelected = selected === carKey;
+          const isPreviewing = this.previewCarId === carKey;
+
+          const card = document.createElement("button");
+          card.className = `p-3 rounded-xl text-left border transition flex items-center justify-between ${
+            isPreviewing
+              ? "bg-slate-800 border-cyan-400 shadow-[0_0_14px_rgba(0,240,255,0.4)]"
+              : "bg-slate-900/80 border-slate-800 hover:border-slate-700"
+          }`;
+
+          let badgeHtml = "";
+          if (isSelected) {
+            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-bold">ACTIVE</span>`;
+          } else if (isOwned) {
+            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-bold">OWNED</span>`;
+          } else {
+            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] font-bold">$${cfg.price}</span>`;
+          }
+
+          card.innerHTML = `
+            <div>
+              <div class="font-orbitron font-bold text-xs sm:text-sm text-white">${cfg.name}</div>
+              <div class="text-[10px] text-slate-400 font-orbitron">${cfg.badge}</div>
+            </div>
+            <div>${badgeHtml}</div>
+          `;
+
+          card.onclick = () => {
+            this.game.audio.playClick();
+            this.previewCarId = carKey;
+            this.renderCarCards();
+            this.updateShowroomDetails();
+          };
+
+          container.appendChild(card);
+        }
+      }
+
+      updateShowroomDetails() {
+        const cfg = VEHICLE_CONFIGS[this.previewCarId] || VEHICLE_CONFIGS.silver_sport;
+        const owned = this.game.saveManager.data.ownedCars || ["silver_sport"];
+        const selected = this.game.saveManager.data.selectedCar || "silver_sport";
+        const isOwned = owned.includes(this.previewCarId);
+        const isSelected = selected === this.previewCarId;
+
+        document.getElementById("garageCoins").textContent = this.game.saveManager.data.coins.toLocaleString();
+        document.getElementById("previewCarName").textContent = cfg.name.toUpperCase();
+        document.getElementById("previewCarDesc").textContent = cfg.desc;
+        document.getElementById("previewCarBadge").textContent = cfg.badge;
+
+        const footerCar = document.getElementById("garageActiveCarFooter");
+        if (footerCar) {
+          const actCfg = VEHICLE_CONFIGS[selected] || VEHICLE_CONFIGS.silver_sport;
+          footerCar.textContent = actCfg.name.toUpperCase();
+        }
+
+        const statusEl = document.getElementById("previewCarStatus");
+        if (statusEl) {
+          if (isSelected) {
+            statusEl.textContent = "ACTIVE VEHICLE";
+            statusEl.className = "font-bold text-emerald-400 text-xs";
+          } else if (isOwned) {
+            statusEl.textContent = "OWNED IN GARAGE";
+            statusEl.className = "font-bold text-cyan-400 text-xs";
+          } else {
+            statusEl.textContent = `FOR SALE: $${cfg.price}`;
+            statusEl.className = "font-bold text-amber-400 text-xs";
+          }
+        }
+
+        // Stats bars
+        const s = cfg.stats;
+        document.getElementById("statSpeed").textContent = `${s.speed}/100`;
+        document.getElementById("barSpeed").style.width = `${s.speed}%`;
+
+        document.getElementById("statAccel").textContent = `${s.accel}/100`;
+        document.getElementById("barAccel").style.width = `${s.accel}%`;
+
+        document.getElementById("statTraction").textContent = `${s.traction}/100`;
+        document.getElementById("barTraction").style.width = `${s.traction}%`;
+
+        document.getElementById("statSusp").textContent = `${s.suspension}/100`;
+        document.getElementById("barSusp").style.width = `${s.suspension}%`;
+
+        // Action button (Select vs Buy)
+        const btn = document.getElementById("btnSelectOrBuy");
+        if (!btn) return;
+
+        if (isSelected) {
+          btn.textContent = "CURRENTLY SELECTED";
+          btn.className = "w-full py-3.5 rounded-xl font-orbitron font-bold text-xs sm:text-sm bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed";
+          btn.onclick = null;
+        } else if (isOwned) {
+          btn.textContent = "SELECT THIS VEHICLE";
+          btn.className = "w-full btn-cyan py-3.5 rounded-xl font-orbitron font-black text-xs sm:text-sm tracking-wider text-white";
+          btn.onclick = () => {
+            this.game.saveManager.data.selectedCar = this.previewCarId;
+            this.game.saveManager.save();
+            this.game.audio.playCoin();
+            this.renderCarCards();
+            this.updateShowroomDetails();
+            this.refreshMenuStats();
+          };
+        } else {
+          const canAfford = this.game.saveManager.data.coins >= cfg.price;
+          btn.textContent = `PURCHASE VEHICLE • $${cfg.price}`;
+          btn.className = canAfford
+            ? "w-full btn-amber py-3.5 rounded-xl font-orbitron font-black text-xs sm:text-sm tracking-wider text-white"
+            : "w-full py-3.5 rounded-xl font-orbitron font-bold text-xs sm:text-sm bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed";
+
+          btn.onclick = () => {
+            if (this.game.saveManager.data.coins >= cfg.price) {
+              this.game.saveManager.data.coins -= cfg.price;
+              this.game.saveManager.data.ownedCars.push(this.previewCarId);
+              this.game.saveManager.data.selectedCar = this.previewCarId;
+              this.game.saveManager.save();
+              this.game.audio.playEnergyPickup();
+              this.renderCarCards();
+              this.updateShowroomDetails();
+              this.refreshMenuStats();
+            } else {
+              this.game.audio.playClick();
+              alert(`Insufficient funds! Need $${cfg.price - this.game.saveManager.data.coins} more coins.`);
+            }
+          };
+        }
       }
 
       renderGarageCards() {
         const sm = this.game.saveManager;
-        document.getElementById("garageCoins").textContent = sm.data.coins;
+        document.getElementById("garageCoins").textContent = sm.data.coins.toLocaleString();
         const container = document.getElementById("upgradesContainer");
+        if (!container) return;
         container.innerHTML = "";
 
         sm.getUpgradeConfig().forEach(cfg => {
@@ -2635,28 +3219,28 @@
           const canAfford = sm.data.coins >= cost && !isMax;
 
           const card = document.createElement("div");
-          card.className = "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col justify-between gap-3";
+          card.className = "p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col justify-between gap-3";
 
           let barsHtml = "";
           for (let i = 1; i <= cfg.maxLevel; i++) {
-            barsHtml += `<div class="h-2 flex-1 rounded-full ${i <= lvl ? 'bg-cyan-400 shadow-[0_0_8px_#22d3ee]' : 'bg-slate-800'}"></div>`;
+            barsHtml += `<div class="h-1.5 flex-1 rounded-full ${i <= lvl ? 'bg-cyan-400 shadow-[0_0_8px_#22d3ee]' : 'bg-slate-800'}"></div>`;
           }
 
           card.innerHTML = `
             <div>
               <div class="flex items-center justify-between">
-                <span class="font-orbitron font-bold text-sm text-white">${cfg.name}</span>
-                <span class="text-xs font-orbitron text-cyan-400">LVL ${lvl}/${cfg.maxLevel}</span>
+                <span class="font-orbitron font-bold text-xs sm:text-sm text-white">${cfg.name}</span>
+                <span class="text-[10px] font-orbitron text-cyan-400">LVL ${lvl}/${cfg.maxLevel}</span>
               </div>
-              <p class="text-xs text-slate-400 mt-1">${cfg.desc}</p>
-              <div class="flex items-center gap-1 mt-3">${barsHtml}</div>
+              <p class="text-[11px] text-slate-400 mt-1">${cfg.desc}</p>
+              <div class="flex items-center gap-1 mt-2.5">${barsHtml}</div>
             </div>
-            <button class="w-full py-2.5 rounded-xl font-orbitron font-bold text-xs tracking-wider ${
+            <button class="w-full py-2.5 rounded-xl font-orbitron font-bold text-xs tracking-wider transition ${
               isMax
                 ? "bg-slate-800 text-slate-500 cursor-not-allowed"
                 : canAfford
                 ? "btn-cyan text-white"
-                : "bg-slate-800/90 text-slate-400 border border-slate-700"
+                : "bg-slate-800/90 text-slate-500 border border-slate-700"
             }">
               ${isMax ? "MAXED OUT" : `UPGRADE ($${cost})`}
             </button>
@@ -2670,6 +3254,7 @@
               sm.save();
               this.game.audio.playEnergyPickup();
               this.renderGarageCards();
+              this.updateShowroomDetails();
             });
           }
 
@@ -2677,15 +3262,125 @@
         });
       }
 
+      renderGarageLivePreview() {
+        const canvas = document.getElementById("garagePreviewCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Ground Line
+        ctx.strokeStyle = "#334155";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(20, 120);
+        ctx.lineTo(440, 120);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#00d2ff";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(20, 117);
+        ctx.lineTo(440, 117);
+        ctx.stroke();
+
+        this.previewWheelRot += 0.035;
+        const bounce = Math.sin(performance.now() * 0.003) * 1.5;
+
+        // Render preview vehicle using PlayerCar renderer
+        const fakeCar = {
+          x: 230,
+          y: 98 + bounce,
+          angle: Math.sin(performance.now() * 0.002) * 0.02,
+          wheelBase: VEHICLE_CONFIGS[this.previewCarId].specs.wheelBase,
+          wheelRadius: VEHICLE_CONFIGS[this.previewCarId].specs.wheelRadius,
+          wheelRotation: this.previewWheelRot,
+          rearWheelCompression: bounce,
+          frontWheelCompression: -bounce,
+          game: this.game,
+          drawAttachedRocketFlame: this.game.car.drawAttachedRocketFlame,
+          drawHeadlightBeam: this.game.car.drawHeadlightBeam,
+          drawCoilSpring: this.game.car.drawCoilSpring,
+          drawWheel: this.game.car.drawWheel
+        };
+
+        ctx.save();
+        ctx.translate(fakeCar.x, fakeCar.y);
+        ctx.rotate(fakeCar.angle);
+
+        if (this.previewCarId === "red_racer") {
+          this.game.car.renderRedRacer.call(fakeCar, ctx, 0);
+        } else if (this.previewCarId === "neon_gt") {
+          this.game.car.renderNeonGT.call(fakeCar, ctx, 1);
+        } else if (this.previewCarId === "offroad_beast") {
+          this.game.car.renderOffroadBeast.call(fakeCar, ctx, 0);
+        } else if (this.previewCarId === "golden_phantom") {
+          this.game.car.renderGoldenPhantom.call(fakeCar, ctx, 1);
+        } else {
+          this.game.car.renderSilverSport.call(fakeCar, ctx, 1);
+        }
+
+        ctx.restore();
+      }
+
+      renderMenuCarPreview() {
+        const canvas = document.getElementById("menuCarCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Ground Line
+        ctx.strokeStyle = "#00d2ff";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(10, 105);
+        ctx.lineTo(430, 105);
+        ctx.stroke();
+
+        const selected = this.game.saveManager.data.selectedCar || "silver_sport";
+        const cfg = VEHICLE_CONFIGS[selected] || VEHICLE_CONFIGS.silver_sport;
+
+        const fakeCar = {
+          x: 220,
+          y: 84,
+          angle: 0,
+          wheelBase: cfg.specs.wheelBase,
+          wheelRadius: cfg.specs.wheelRadius,
+          wheelRotation: performance.now() * 0.002,
+          rearWheelCompression: 0,
+          frontWheelCompression: 0,
+          game: this.game,
+          drawAttachedRocketFlame: this.game.car.drawAttachedRocketFlame,
+          drawHeadlightBeam: this.game.car.drawHeadlightBeam,
+          drawCoilSpring: this.game.car.drawCoilSpring,
+          drawWheel: this.game.car.drawWheel
+        };
+
+        ctx.save();
+        ctx.translate(fakeCar.x, fakeCar.y);
+
+        if (selected === "red_racer") {
+          this.game.car.renderRedRacer.call(fakeCar, ctx, 0);
+        } else if (selected === "neon_gt") {
+          this.game.car.renderNeonGT.call(fakeCar, ctx, 0.8);
+        } else if (selected === "offroad_beast") {
+          this.game.car.renderOffroadBeast.call(fakeCar, ctx, 0);
+        } else if (selected === "golden_phantom") {
+          this.game.car.renderGoldenPhantom.call(fakeCar, ctx, 0.8);
+        } else {
+          this.game.car.renderSilverSport.call(fakeCar, ctx, 0.8);
+        }
+
+        ctx.restore();
+      }
+
       updateHUD() {
         const g = this.game;
         document.getElementById("hudDistance").textContent = g.distanceMeters;
         document.getElementById("hudScore").textContent = Math.floor(g.score);
-        document.getElementById("hudCoins").textContent = g.saveManager.data.coins;
+        document.getElementById("hudCoins").textContent = g.saveManager.data.coins.toLocaleString();
         document.getElementById("hudSpeed").textContent = Math.max(0, Math.round(g.car.vx * 0.36));
         document.getElementById("hudFlips").textContent = g.runFlips;
 
-        // Energy bar
         const pct = Math.max(0, Math.min(100, (g.rocket.energy / g.rocket.maxEnergy) * 100));
         document.getElementById("hudEnergyBar").style.width = `${pct}%`;
 
@@ -2701,7 +3396,6 @@
           statusEl.className = "text-[10px] font-orbitron font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-400/30";
         }
 
-        // Obstacle warning banner
         const banner = document.getElementById("obstacleWarningBanner");
         const warn = g.obstacles.activeWarning;
         if (warn && warn.dist < 480 && !g.rocket.isBoosting) {
@@ -2733,7 +3427,7 @@
     }
 
     /* =========================================================
-       12. MAIN GAME CONTROLLER
+       12. MASTER GAME ENGINE (State, Physics Substeps & Loop)
        ========================================================= */
     class Game {
       constructor() {
@@ -2753,6 +3447,9 @@
         this.ui = new UIManager(this);
 
         this.state = "MENU"; // MENU, GARAGE, PLAYING, PAUSED, GAMEOVER
+        this.runId = 0;
+        this.crashTimeout = null;
+
         this.distanceMeters = 0;
         this.score = 0;
         this.runCoins = 0;
@@ -2771,6 +3468,7 @@
         }));
 
         this.handleResize();
+        this.camera.reset(this.car, this.width, this.height);
         window.addEventListener("resize", () => this.handleResize());
 
         this.lastTime = performance.now();
@@ -2787,11 +3485,17 @@
       }
 
       startGame() {
+        this.runId++;
+        if (this.crashTimeout) {
+          clearTimeout(this.crashTimeout);
+          this.crashTimeout = null;
+        }
+
         this.input.resetKeys();
         this.terrain.reset();
         this.particles.reset();
         this.rocket.reset();
-        this.car.reset();
+        this.car.reset(); // re-applies active car specs, dimensions and spawn height
         this.obstacles.reset();
         this.coins.reset();
         this.camera.reset(this.car, this.width, this.height);
@@ -2809,6 +3513,7 @@
         this.state = "PLAYING";
         this.ui.showScreen("hudScreen");
         this.ui.refreshSettingsUI();
+        this.audio.ensureContext();
       }
 
       pauseGame() {
@@ -2822,6 +3527,7 @@
         if (this.state !== "PAUSED") return;
         this.state = "PLAYING";
         this.ui.showScreen("hudScreen");
+        this.audio.ensureContext();
       }
 
       triggerSlowMo(scale, duration) {
@@ -2887,8 +3593,9 @@
         }
         this.saveManager.save();
 
-        setTimeout(() => {
-          if (this.car.crashed) {
+        const activeRun = this.runId;
+        this.crashTimeout = setTimeout(() => {
+          if (this.runId === activeRun && this.car.crashed) {
             this.state = "GAMEOVER";
             this.ui.showGameOver(isNewRecord);
           }
@@ -2897,7 +3604,6 @@
 
       update(rawDt) {
         if (this.state !== "PLAYING") {
-          // Subtle idle animation on menu background
           this.particles.update(rawDt);
           return;
         }
@@ -2909,16 +3615,13 @@
 
         const dt = rawDt * this.timeScale;
 
-        // Check manual Rocket Flight activation
         if (this.input.consumeRocketTrigger()) {
           this.rocket.activate(false);
         }
 
-        // Maintain procedural terrain ahead & clean up behind
         this.terrain.generateUpTo(this.car.x + 2600);
         this.terrain.cleanupBehind(this.car.x - 1200);
 
-        // Fixed physics substeps for stable suspension & collisions
         const substeps = 4;
         const subDt = dt / substeps;
         for (let s = 0; s < substeps; s++) {
@@ -2929,9 +3632,8 @@
         this.obstacles.update(dt);
         this.coins.update(dt);
         this.particles.update(dt);
-        this.camera.update( rawDt, this.car, this.width, this.height );
+        this.camera.update(rawDt, this.car, this.width, this.height);
 
-        // Update distance & milestones
         const currentDist = Math.max(0, Math.floor((this.car.x - 120) / 22));
         if (currentDist > this.distanceMeters) {
           this.score += (currentDist - this.distanceMeters) * 2;
@@ -2944,7 +3646,6 @@
           this.nextMilestone += 250;
         }
 
-        // Update floating callout texts
         for (let i = this.floatingTexts.length - 1; i >= 0; i--) {
           const ft = this.floatingTexts[i];
           ft.y -= 38 * rawDt;
@@ -2952,7 +3653,6 @@
           if (ft.life <= 0) this.floatingTexts.splice(i, 1);
         }
 
-        // Update Engine Synthesizer Hum
         this.audio.updateEngineSound(
           this.car.vx / this.car.maxSpeed,
           this.input.keys.accel,
@@ -2963,7 +3663,6 @@
       }
 
       renderBackground(ctx) {
-        // Atmospheric Deep Space to Horizon Sky Gradient
         const skyGrad = ctx.createLinearGradient(0, 0, 0, this.height);
         skyGrad.addColorStop(0, "#040714");
         skyGrad.addColorStop(0.55, "#0d1b3a");
@@ -2971,7 +3670,6 @@
         ctx.fillStyle = skyGrad;
         ctx.fillRect(0, 0, this.width, this.height);
 
-        // Parallax Stars
         ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
         for (let i = 0; i < this.stars.length; i++) {
           const st = this.stars[i];
@@ -2981,9 +3679,7 @@
           ctx.fill();
         }
 
-        // Distant Futuristic Mountain Range (Parallax Layer 1)
         this.drawParallaxMountains(ctx, 0.14, "#0f172a", this.height * 0.68, 120);
-        // Closer Mountain Range & Futuristic Towers (Parallax Layer 2)
         this.drawParallaxMountains(ctx, 0.28, "#16213e", this.height * 0.76, 75);
       }
 
@@ -3010,20 +3706,17 @@
         this.renderBackground(ctx);
 
         ctx.save();
-        // Apply camera zoom & screen shake
         const shakeX = (Math.random() - 0.5) * this.camera.shake;
         const shakeY = (Math.random() - 0.5) * this.camera.shake;
         ctx.scale(this.camera.zoom, this.camera.zoom);
         ctx.translate(-this.camera.x + shakeX, -this.camera.y + shakeY);
 
-        // Render World Entities
         this.terrain.render(ctx, this.camera, this.width, this.height);
         this.coins.render(ctx, this.camera, this.width);
         this.obstacles.render(ctx, this.camera, this.width);
         this.particles.render(ctx);
         this.car.render(ctx);
 
-        // Render Floating Bonus Score Popups
         for (let i = 0; i < this.floatingTexts.length; i++) {
           const ft = this.floatingTexts[i];
           ctx.save();
@@ -3038,6 +3731,13 @@
         }
 
         ctx.restore();
+
+        // Render live previews when in Menu or Garage
+        if (this.state === "MENU") {
+          this.ui.renderMenuCarPreview();
+        } else if (this.state === "GARAGE") {
+          this.ui.renderGarageLivePreview();
+        }
       }
 
       loop(now) {
@@ -3052,9 +3752,9 @@
     }
 
     // Start the game engine on window load
-    window.onload = function () {
+    window.addEventListener("DOMContentLoaded", () => {
       window.ROCKET_HILL_GAME = new Game();
-    };
+    });
   </script>
 </body>
 </html>
